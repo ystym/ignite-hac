@@ -420,7 +420,7 @@ export function KnowledgeSearch({
                       setQuery("");
                       inputRef.current?.focus();
                     }}
-                    className="absolute right-3 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-ink-300 transition hover:bg-[#e8e8ed] hover:text-ink-600"
+                    className="absolute right-1.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full text-ink-300 transition hover:bg-[#e8e8ed] hover:text-ink-600"
                     aria-label="Clear search"
                   >
                     <X className="h-3.5 w-3.5" />
@@ -450,7 +450,7 @@ export function KnowledgeSearch({
                   onClick={() => setMode("library")}
                   aria-pressed={mode === "library"}
                   className={cn(
-                    "inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11.5px] font-semibold transition sm:flex-none",
+                    "inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[11.5px] font-semibold transition sm:flex-none",
                     mode === "library"
                       ? "bg-violet-600 text-white"
                       : "text-ink-500 hover:text-ink-800",
@@ -463,7 +463,7 @@ export function KnowledgeSearch({
                   onClick={() => setMode("web")}
                   aria-pressed={mode === "web"}
                   className={cn(
-                    "inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11.5px] font-semibold transition sm:flex-none",
+                    "inline-flex min-h-10 flex-1 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-[11.5px] font-semibold transition sm:flex-none",
                     mode === "web"
                       ? "bg-sky-600 text-white"
                       : "text-ink-500 hover:text-ink-800",
@@ -489,7 +489,7 @@ export function KnowledgeSearch({
                 key={suggestion}
                 type="button"
                 onClick={() => useSuggestion(suggestion)}
-                className="rounded-full border border-hairline bg-parchment px-2.5 py-1 text-[10.5px] font-medium text-ink-500 transition hover:border-[#d2d2d7] hover:bg-white hover:text-action"
+                className="rounded-full border border-hairline bg-parchment px-3 py-1.5 text-[10.5px] font-medium text-ink-500 transition hover:border-[#d2d2d7] hover:bg-white hover:text-action"
               >
                 {suggestion}
               </button>
@@ -542,7 +542,7 @@ export function KnowledgeSearch({
                       onClick={() => setFilter(item.key)}
                       aria-pressed={active}
                       className={cn(
-                        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition",
+                        "inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition",
                         active
                           ? "border-action bg-action text-white"
                           : "border-hairline bg-white text-ink-500 hover:border-[#d2d2d7] hover:text-ink-800",
@@ -738,7 +738,7 @@ function LocalResultCard({ hit, query }: { hit: SearchHit; query: string }) {
   return (
     <Link
       href={hit.href}
-      className="group flex min-w-0 items-start gap-3.5 rounded-2xl border border-hairline bg-white p-4 transition hover:-translate-y-0.5 hover:border-violet-200 sm:p-5"
+      className="group flex min-w-0 items-start gap-3.5 rounded-2xl border border-hairline bg-white p-4 transition-colors hover:border-violet-200 sm:p-5"
     >
       <span
         className={cn(

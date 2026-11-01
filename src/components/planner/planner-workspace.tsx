@@ -308,7 +308,7 @@ export function PlannerWorkspace({
                     setCreating(true);
                     setError(null);
                   }}
-                  className="inline-flex h-6 w-6 items-center justify-center rounded-md text-ink-400 transition hover:bg-violet-50 hover:text-violet-700"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink-400 transition hover:bg-violet-50 hover:text-violet-700"
                   aria-label="Create a new study plan"
                 >
                   <Plus className="h-3.5 w-3.5" />
@@ -873,7 +873,7 @@ function PlanDetail({
                 size="icon-sm"
                 variant="ghost"
                 onClick={onDelete}
-                className="text-ink-400 hover:bg-rose-50 hover:text-rose-600"
+                className="h-10 w-10 text-ink-400 hover:bg-rose-50 hover:text-rose-600"
                 aria-label="Delete this study plan"
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -1002,20 +1002,26 @@ function PlanDetail({
                           onClick={() => onToggleTask(task)}
                           disabled={Boolean(savingTaskId)}
                           className={cn(
-                            "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition",
-                            done
-                              ? "border-emerald-500 bg-emerald-500 text-white"
-                              : "border-slate-300 bg-white hover:border-violet-400",
+                            "-mt-1.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition hover:bg-parchment",
                             saving && "opacity-60",
                           )}
                           aria-label={`Mark “${task.title}” as ${done ? "not complete" : "complete"}`}
                           aria-pressed={done}
                         >
-                          {saving ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : done ? (
-                            <Check className="h-3 w-3" />
-                          ) : null}
+                          <span
+                            className={cn(
+                              "flex h-5 w-5 items-center justify-center rounded-md border transition",
+                              done
+                                ? "border-emerald-500 bg-emerald-500 text-white"
+                                : "border-slate-300 bg-white",
+                            )}
+                          >
+                            {saving ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : done ? (
+                              <Check className="h-3 w-3" />
+                            ) : null}
+                          </span>
                         </button>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2">

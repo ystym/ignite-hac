@@ -8,8 +8,9 @@ It is built for the case where a study assistant must be useful **and honest**: 
 
 ![Stack](https://img.shields.io/badge/Next.js-16.4.3-000?style=flat-square)
 ![React](https://img.shields.io/badge/React-19.3.1-149ECA?style=flat-square)
-![Gemini](https://img.shields.io/badge/Google-Gemini-6A3BFA?style=flat-square)
+![Gemini](https://img.shields.io/badge/Google-Gemini-0066CC?style=flat-square)
 ![Database](https://img.shields.io/badge/SQLite-Prisma-2D3748?style=flat-square)
+![Design](https://img.shields.io/badge/Interface-Apple--inspired-1D1D1F?style=flat-square)
 
 ---
 
@@ -488,17 +489,18 @@ Validation happens twice: in the browser for fast feedback, and again on the ser
 The following was exercised in this workspace:
 
 - `npm run typecheck` passes.
-- `npm run build` passes; all routes compile.
+- `npm run build` passes after the final interface pass; all routes compile. Turbopack reports two non-blocking dynamic-filesystem tracing warnings in the document file routes.
+- Browser layouts at **320 px, 390 px and 1440 px**: landing, dashboard, library, search, upload, planner, quiz, learn, reliability, setup and the document workspace. No page-level horizontal overflow was found. The fixed decorative web layer extends beyond the viewport by design; it cannot receive pointer events or be read by assistive technology.
 - Seeded demo workspace: 3 documents, 3 notes, 3 quizzes, 1 plan, 1 reliability reference and a demo conversation.
-- Browser flows at a 320 px mobile viewport: landing, dashboard, library, upload, planner, quiz index/runner/results, reliability, setup, document Notes/Extracted/Practice/Ask tabs, mobile navigation.
+- Mobile navigation, local knowledge search with kind filters, and search empty states.
 - Manual correction on the demo document: warning audit preserved, block marked human-corrected, index marked stale, rebuild restored ready.
 - Demo Ask: cited response and clear-conversation flow.
 - Quiz: all questions answered, submitted, scored on the server, explanations/excerpts shown, attempt persisted.
 - Planner: task tick persisted across reload; regeneration dialog, deterministic regeneration and completion reset.
 - Reliability: human correction saved and persisted.
-- No browser console errors on the tested demo flows after the timestamp hydration fix.
+- Learn a topic: live topic notes returned a validated response in an earlier verification run; the interface also renders the external-knowledge notice correctly.
 
-**Live Gemini calls were not executed in this environment because no `GEMINI_API_KEY` was available.** The live path is implemented, schema-guarded and reachable through the checklist above, but it must be verified with your own key. The app intentionally does not claim otherwise.
+**Live verification is partial, not claimed as complete.** A Gemini key is configured in this workspace, but the model's daily request quota was exhausted during the final pass. The connection test therefore surfaced the provider's quota error honestly instead of returning a fake success. Live web research, a fresh end-to-end upload, live diagram extraction and live quiz/plan generation remain to be re-run when quota resets or billing is enabled. The app never substitutes curated output for a failed live call.
 
 There is no automated browser test suite. Validation for this build was manual plus TypeScript and production-build checks.
 
@@ -513,7 +515,9 @@ There is no automated browser test suite. Validation for this build was manual p
 - **Model judgement can still fail.** The reliability lab exists to show that a confident wrong answer is possible. Inspect warnings and sources.
 - **Live AI needs network and quota.** Rate limits, quota exhaustion or provider outages surface as errors with retry guidance. The app does not silently substitute curated content.
 - **Mixed PDFs.** In digital-PDF mode only the text layer is used. Pages without a text layer are marked unreadable rather than silently OCR'd; use an image-based flow if every page must be OCR'd.
+- **Web sources are real but unvetted.** Web research reports the URLs returned by Gemini Google Search grounding. It does not score source authority, check publication dates or verify every claim. Open the original page before relying on it.
 - **Files API cleanup is best-effort.** Uploaded Gemini files are deleted in a `finally` block, but a process crash can leave a provider-side file. It is not referenced by the app.
+- **Daily quota can interrupt every live flow.** Provider quota exhaustion is surfaced as a retryable error. It is never hidden behind curated output.
 - **No automated tests.** Type checking, the production build and manual browser flows were used. A CI suite would be the next engineering step.
 
 ---
@@ -541,6 +545,8 @@ This recreates the database, applies migrations and seeds the pristine curated w
 
 ## Design notes
 
+- **Follows the supplied Apple design spec.** `DESIGN.md` is the visual reference: one Action Blue accent, Apple ink and parchment neutrals, hairline borders, 18px utility cards, pill controls, 600-weight headlines and no decorative card shadows.
+- **One canvas, one quiet texture.** A fixed, low-contrast spider-web SVG sits behind the app in `SpiderWebBackground`. It is `aria-hidden`, pointer-events-free, hidden in print and deliberately faint enough for long reading sessions.
 - **Local fonts** keep the UI fully offline and avoid layout shift or CDN dependencies.
 - **Server-side keys only.** `GEMINI_API_KEY` is never exposed through `NEXT_PUBLIC_*`.
 - **Persisted progress.** The browser polls real database stages; there is no `setTimeout`-driven fake progress bar.

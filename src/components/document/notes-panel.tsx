@@ -86,7 +86,7 @@ export function NotesPanel({
         <Select
           value={language}
           onChange={(event) => setLanguage(event.target.value)}
-          className="h-9 w-[158px] pl-8 text-[12px]"
+          className="h-10 w-[168px] pl-8 text-[12px]"
           aria-label="Note language"
           disabled={generating}
         >

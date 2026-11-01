@@ -227,7 +227,7 @@ export function DocumentWorkspace({
             variant="ghost"
             size="icon-sm"
             onClick={() => setDeleteOpen(true)}
-            className="text-ink-400 hover:bg-rose-50 hover:text-rose-600"
+            className="h-10 w-10 text-ink-400 hover:bg-rose-50 hover:text-rose-600"
             aria-label="Delete this document"
             title="Delete document"
           >

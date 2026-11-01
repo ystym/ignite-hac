@@ -113,7 +113,7 @@ export default function LandingPage() {
               Open workspace
             </Link>
             {status.mode === "live" ? (
-              <Button asChild variant="primary" size="sm" className="h-8 px-4 text-[12px]">
+              <Button asChild variant="primary" size="sm" className="h-10 px-4 text-[12px]">
                 <Link href="/upload">Start studying</Link>
               </Button>
             ) : (
@@ -122,7 +122,7 @@ export default function LandingPage() {
                 size="sm"
                 label="Try the demo"
                 showIcon={false}
-                className="h-8 px-4 text-[12px]"
+                className="h-10 px-4 text-[12px]"
               />
             )}
           </div>
