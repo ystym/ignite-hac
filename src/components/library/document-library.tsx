@@ -97,24 +97,24 @@ export function DocumentLibrary({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search by title, filename or extraction method…"
-              className="border-transparent bg-parchment pl-10 shadow-none focus:bg-white"
+              className="border-hairline bg-parchment pl-10 focus:bg-white"
               aria-label="Search documents"
             />
           </div>
           <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-3 lg:flex">
-            <Select value={type} onChange={(event) => setType(event.target.value)} className="min-w-0 lg:w-[132px]" aria-label="Filter by type">
+            <Select value={type} onChange={(event) => setType(event.target.value)} className="min-w-0 lg:w-[144px]" aria-label="Filter by type">
               <option value="all">All types</option>
               <option value="image">Images</option>
               <option value="pdf">PDFs</option>
               <option value="audio">Audio</option>
               <option value="text">Typed text</option>
             </Select>
-            <Select value={mode} onChange={(event) => setMode(event.target.value)} className="min-w-0 lg:w-[122px]" aria-label="Filter by mode">
+            <Select value={mode} onChange={(event) => setMode(event.target.value)} className="min-w-0 lg:w-[132px]" aria-label="Filter by mode">
               <option value="all">All modes</option>
               <option value="LIVE">Live AI</option>
               <option value="DEMO">Demo</option>
             </Select>
-            <Select value={status} onChange={(event) => setStatus(event.target.value)} className="min-w-0 lg:w-[132px]" aria-label="Filter by status">
+            <Select value={status} onChange={(event) => setStatus(event.target.value)} className="min-w-0 lg:w-[144px]" aria-label="Filter by status">
               <option value="all">Any status</option>
               <option value="READY">Ready</option>
               <option value="PROCESSING">Processing</option>
@@ -147,7 +147,7 @@ export function DocumentLibrary({
           className="mt-5"
         />
       ) : (
-        <div className="mt-5 grid min-w-0 gap-4 xl:grid-cols-2">
+        <div className="mt-5 grid min-w-0 gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {filtered.map((doc) => {
             const statusVariant =
               doc.status === "READY" ? "green" : doc.status === "FAILED" ? "rose" : "amber";

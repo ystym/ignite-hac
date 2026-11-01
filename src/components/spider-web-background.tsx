@@ -49,7 +49,7 @@ function Web({ className }: { className?: string }) {
       className={cn("text-ink-900", className)}
       aria-hidden="true"
     >
-      <g stroke="currentColor" strokeWidth="1" strokeLinecap="round">
+      <g stroke="currentColor" strokeWidth="1.15" strokeLinecap="round">
         {spokes.map((point, index) => (
           <line key={`spoke-${index}`} x1="0" y1="0" x2={point.x} y2={point.y} />
         ))}
@@ -75,10 +75,10 @@ export function SpiderWebBackground({ className }: { className?: string }) {
         className,
       )}
     >
-      <Web className="absolute -left-28 -top-28 h-[420px] w-[420px] opacity-[0.075] sm:h-[560px] sm:w-[560px]" />
-      <Web className="absolute -right-28 -top-28 h-[420px] w-[420px] -scale-x-100 opacity-[0.065] sm:h-[560px] sm:w-[560px]" />
-      <Web className="absolute -bottom-32 -right-32 h-[440px] w-[440px] -scale-100 opacity-[0.05] sm:h-[600px] sm:w-[600px]" />
-      <Web className="absolute -bottom-24 -left-24 h-[320px] w-[320px] -scale-y-100 opacity-[0.045] sm:h-[420px] sm:w-[420px]" />
+      <Web className="absolute -left-28 -top-28 h-[420px] w-[420px] opacity-[0.12] sm:h-[560px] sm:w-[560px]" />
+      <Web className="absolute -right-28 -top-28 h-[420px] w-[420px] -scale-x-100 opacity-[0.105] sm:h-[560px] sm:w-[560px]" />
+      <Web className="absolute -bottom-32 -right-32 h-[440px] w-[440px] -scale-100 opacity-[0.08] sm:h-[600px] sm:w-[600px]" />
+      <Web className="absolute -bottom-24 -left-24 h-[320px] w-[320px] -scale-y-100 opacity-[0.065] sm:h-[420px] sm:w-[420px]" />
     </div>
   );
 }

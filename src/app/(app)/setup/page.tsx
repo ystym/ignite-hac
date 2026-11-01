@@ -6,6 +6,7 @@ import {
   FileText,
   FlaskConical,
   Gauge,
+  Globe2,
   GraduationCap,
   KeyRound,
   Lock,
@@ -144,6 +145,18 @@ const CAPABILITIES = [
     blocked: false,
   },
   {
+    capability: "Knowledge search across the workspace",
+    live: "Local weighted search over documents, notes, passages, quizzes and plans",
+    demo: "The same local search over the curated workspace",
+    blocked: false,
+  },
+  {
+    capability: "Live web research",
+    live: "Gemini Google Search grounding with the source URLs returned by the provider",
+    demo: "Blocked — no fabricated web answers",
+    blocked: true,
+  },
+  {
     capability: "Manual correction and index rebuild",
     live: "Available; persisted locally",
     demo: "Available; rebuilds local demo vectors",
@@ -177,6 +190,11 @@ const LIMITS = [
     icon: GraduationCap,
     title: "Topic notes are external knowledge",
     body: "Learn a topic does not read your uploads. Its notes are general knowledge, kept out of the database index, the grounded notes, quizzes and cited answers, and labelled as external everywhere they appear. Verify them against your own syllabus.",
+  },
+  {
+    icon: Globe2,
+    title: "Web sources are real, not vetted",
+    body: "Web research lists the URLs returned by Google Search grounding. It does not rank source authority or verify every claim. Open the original source before relying on it for an exam answer.",
   },
   {
     icon: Timer,
@@ -250,7 +268,7 @@ export default async function SetupPage() {
 
       <section id="live-setup" className="mt-9 scroll-mt-24">
         <div className="mb-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-600">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-action">
             Live setup
           </p>
           <h2 className="mt-1 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-semibold tracking-[-0.03em] text-ink-950">
@@ -265,7 +283,7 @@ export default async function SetupPage() {
         <div className="grid min-w-0 gap-5 xl:grid-cols-[1.06fr_0.94fr]">
           <div className="min-w-0 rounded-2xl border border-hairline bg-white p-5 sm:p-6">
             <div className="flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-violet-600">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#f0f7ff] text-action">
                 <Sparkles className="h-4 w-4" />
               </span>
               <h3 className="font-display text-[15px] font-semibold text-ink-900">From zero to running</h3>
@@ -329,7 +347,7 @@ export default async function SetupPage() {
             <div className="min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white">
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f0f0f0] px-5 py-3.5">
                 <div className="flex items-center gap-2">
-                  <KeyRound className="h-4 w-4 text-violet-600" />
+                  <KeyRound className="h-4 w-4 text-action" />
                   <h3 className="text-[12.5px] font-semibold text-ink-900">Minimum live configuration</h3>
                 </div>
                 <CopyButton value={ENV_SNIPPET} label="Copy .env" />
@@ -492,7 +510,7 @@ export default async function SetupPage() {
 
       <div className="mt-8 flex flex-col items-start justify-between gap-3 rounded-2xl border border-hairline bg-parchment p-5 sm:flex-row sm:items-center">
         <div className="flex items-start gap-2.5">
-          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-violet-500" />
+          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-action" />
           <p className="max-w-2xl text-[10.5px] leading-5 text-ink-500">
             No accuracy percentage is claimed anywhere in this application. Confidence is model-reported,
             the reliability fixture is a demonstration of failure modes rather than a benchmark, and every
@@ -505,7 +523,7 @@ export default async function SetupPage() {
               <FlaskConical className="h-3.5 w-3.5" /> Reliability lab
             </Link>
           </Button>
-          <Button asChild variant="violet" size="sm">
+          <Button asChild variant="primary" size="sm">
             <Link href="/dashboard">
               Open dashboard <ArrowRight className="h-3.5 w-3.5" />
             </Link>

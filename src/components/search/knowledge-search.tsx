@@ -409,7 +409,7 @@ export function KnowledgeSearch({
                   onChange={(event) => setQuery(event.target.value)}
                   placeholder="Try “photosynthesis”, “linked lists” or a full question…"
                   aria-label="Search your material or the web"
-                  className="h-12 rounded-2xl border-white/90 bg-white/95 pl-11 pr-10 text-[14px] placeholder:text-ink-300"
+                  className="h-12 pl-11 pr-10 text-[14px] placeholder:text-ink-400"
                   maxLength={180}
                   autoComplete="off"
                 />
@@ -429,9 +429,9 @@ export function KnowledgeSearch({
               </div>
               <Button
                 type="submit"
-                variant="violet"
+                variant="primary"
                 size="lg"
-                className="h-12 rounded-2xl px-6"
+                className="h-12 px-6"
                 loading={localLoading || webLoading}
               >
                 {!localLoading && !webLoading && <Search className="h-4 w-4" />}
@@ -489,7 +489,7 @@ export function KnowledgeSearch({
                 key={suggestion}
                 type="button"
                 onClick={() => useSuggestion(suggestion)}
-                className="rounded-full border border-white bg-white/70 px-2.5 py-1 text-[10.5px] font-medium text-ink-500 transition hover:border-violet-200 hover:bg-white hover:text-violet-700"
+                className="rounded-full border border-hairline bg-parchment px-2.5 py-1 text-[10.5px] font-medium text-ink-500 transition hover:border-[#d2d2d7] hover:bg-white hover:text-action"
               >
                 {suggestion}
               </button>
@@ -530,7 +530,7 @@ export function KnowledgeSearch({
                 </Button>
               </div>
 
-              <div className="no-scrollbar mb-3 flex gap-1.5 overflow-x-auto pb-0.5">
+              <div className="mb-3 flex flex-wrap gap-1.5">
                 {FILTERS.map((item) => {
                   const count =
                     item.key === "all" ? local.total : local.counts[item.key] ?? 0;
@@ -542,17 +542,17 @@ export function KnowledgeSearch({
                       onClick={() => setFilter(item.key)}
                       aria-pressed={active}
                       className={cn(
-                        "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition",
+                        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold transition",
                         active
-                          ? "border-violet-300 bg-violet-50 text-violet-800"
-                          : "border-hairline bg-white text-ink-500 hover:border-slate-300 hover:text-ink-800",
+                          ? "border-action bg-action text-white"
+                          : "border-hairline bg-white text-ink-500 hover:border-[#d2d2d7] hover:text-ink-800",
                       )}
                     >
                       {item.label}
                       <span
                         className={cn(
                           "rounded-full px-1.5 text-[9.5px] font-semibold",
-                          active ? "bg-violet-200/60 text-violet-800" : "bg-[#e8e8ed] text-ink-400",
+                          active ? "bg-white/20 text-white" : "bg-[#e8e8ed] text-ink-400",
                         )}
                       >
                         {count}
@@ -567,7 +567,7 @@ export function KnowledgeSearch({
                   <LocalResultCard key={hit.id} hit={hit} query={local.query} />
                 ))}
                 {filteredHits.length === 0 && (
-                  <div className="rounded-2xl border border-dashed border-hairline bg-white/70 p-8 text-center">
+                  <div className="rounded-2xl border border-hairline bg-white p-8 text-center">
                     <p className="text-[13px] font-semibold text-ink-700">
                       No {filter === "all" ? "" : FILTERS.find((item) => item.key === filter)?.label.toLowerCase()}{" "}
                       results in this search.

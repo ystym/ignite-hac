@@ -108,7 +108,7 @@ export default async function DashboardPage() {
                 <CalendarDays className="h-4 w-4" /> Plan the week
               </Link>
             </Button>
-            <Button asChild variant="violet">
+            <Button asChild variant="primary">
               <Link href="/upload">
                 <UploadCloud className="h-4 w-4" /> Upload material
               </Link>
@@ -131,11 +131,11 @@ export default async function DashboardPage() {
               maxLength={180}
               placeholder="Search documents, notes, passages, quizzes and plans…"
               aria-label="Search your study material"
-              className="h-11 w-full rounded-xl border border-white bg-white/95 pl-10 pr-3 text-[13px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+              className="h-11 w-full rounded-full border border-hairline bg-parchment pl-10 pr-3 text-[13px] text-ink-900 outline-none transition placeholder:text-ink-400 focus:border-action-focus focus:bg-white focus:ring-4 focus:ring-[#0071e3]/10"
             />
           </div>
           <div className="flex items-center gap-2">
-            <Button type="submit" variant="violet" size="md" className="flex-1 sm:flex-none">
+            <Button type="submit" variant="primary" size="md" className="flex-1 sm:flex-none">
               <Search className="h-4 w-4" /> Search
             </Button>
             <Button asChild variant="outline" size="md" className="flex-1 sm:flex-none">
@@ -161,7 +161,7 @@ export default async function DashboardPage() {
               ai.mode === "demo" ? (
                 <DemoLaunchButton label="Load the curated demo" />
               ) : (
-                <Button asChild variant="violet">
+                <Button asChild variant="primary">
                   <Link href="/upload">Upload your first file</Link>
                 </Button>
               )
@@ -174,7 +174,7 @@ export default async function DashboardPage() {
               { title: "Study with sources", body: "Structured notes, grounded quizzes, cited answers and a realistic plan.", icon: BookOpenCheck },
             ].map((item) => (
               <Card key={item.title} className="p-5">
-                <item.icon className="h-5 w-5 text-violet-600" />
+                <item.icon className="h-5 w-5 text-action" />
                 <h3 className="mt-4 text-sm font-semibold text-ink-900">{item.title}</h3>
                 <p className="mt-1.5 text-[12.5px] leading-6 text-ink-500">{item.body}</p>
               </Card>
@@ -194,7 +194,7 @@ export default async function DashboardPage() {
                     {documents}
                   </p>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-parchment text-ink-600">
                   <Layers3 className="h-5 w-5" />
                 </span>
               </div>
@@ -213,7 +213,7 @@ export default async function DashboardPage() {
                     {noteCount}
                   </p>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-parchment text-ink-600">
                   <NotebookPen className="h-5 w-5" />
                 </span>
               </div>
@@ -232,7 +232,7 @@ export default async function DashboardPage() {
                     {attempts}
                   </p>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-parchment text-ink-600">
                   <ListChecks className="h-5 w-5" />
                 </span>
               </div>
@@ -253,7 +253,7 @@ export default async function DashboardPage() {
                     {allTasks.length > 0 ? percent(planProgress / 100) : "—"}
                   </p>
                 </div>
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-50 text-sky-600">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-parchment text-ink-600">
                   <Target className="h-5 w-5" />
                 </span>
               </div>
