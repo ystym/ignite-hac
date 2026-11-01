@@ -16,7 +16,7 @@ function readInt(value: string | undefined, fallback: number): number {
 export function getAIStatus(): AIStatus {
   const key = process.env.GEMINI_API_KEY?.trim() ?? "";
   const forceDemo = (process.env.FORCE_DEMO_MODE ?? "").toLowerCase() === "true";
-  const model = process.env.GEMINI_MODEL?.trim() || "gemini-3.6-flash";
+  const model = process.env.GEMINI_MODEL?.trim() || "gemini-3-flash-preview";
   const embeddingModel = process.env.GEMINI_EMBEDDING_MODEL?.trim() || "gemini-embedding-001";
   const configured = Boolean(key) && !forceDemo;
 

@@ -297,9 +297,9 @@ export function PlannerWorkspace({
       ) : (
         <div className="grid gap-6 xl:grid-cols-[260px_minmax(0,1fr)]">
           <aside className="xl:sticky xl:top-24 xl:self-start">
-            <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-card">
+            <div className="rounded-2xl border border-hairline bg-white p-3">
               <div className="flex items-center justify-between px-1.5 pb-2.5 pt-1">
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-ink-400">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-400">
                   Your plans · {plans.length}
                 </p>
                 <button
@@ -333,7 +333,7 @@ export function PlannerWorkspace({
                         "w-full rounded-xl border p-3 text-left transition",
                         active
                           ? "border-violet-200 bg-violet-50/70"
-                          : "border-transparent hover:border-slate-200 hover:bg-slate-50",
+                          : "border-transparent hover:border-hairline hover:bg-parchment",
                       )}
                       aria-current={active ? "true" : undefined}
                     >
@@ -344,7 +344,7 @@ export function PlannerWorkspace({
                             plan.mode === "LIVE" ? "bg-emerald-500" : "bg-amber-500",
                           )}
                         />
-                        <p className={cn("truncate text-[12px] font-bold", active ? "text-violet-900" : "text-ink-800")}>
+                        <p className={cn("truncate text-[12px] font-semibold", active ? "text-violet-900" : "text-ink-800")}>
                           {plan.title}
                         </p>
                       </div>
@@ -373,10 +373,10 @@ export function PlannerWorkspace({
               </div>
             </div>
 
-            <div className="mt-3 rounded-xl border border-slate-200 bg-white p-3.5">
+            <div className="mt-3 rounded-xl border border-hairline bg-white p-3.5">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="h-3.5 w-3.5 text-violet-500" />
-                <p className="text-[10.5px] font-bold text-ink-800">
+                <p className="text-[10.5px] font-semibold text-ink-800">
                   {aiConfigured ? "Gemini planner active" : "Local scheduler mode"}
                 </p>
               </div>
@@ -556,14 +556,14 @@ function PlanForm({
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_330px]">
       <form
         onSubmit={submit}
-        className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card sm:p-6"
+        className="rounded-2xl border border-hairline bg-white p-5 sm:p-6"
       >
         <div className="flex items-start gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-50 text-violet-600">
             <CalendarPlus className="h-5 w-5" />
           </span>
           <div>
-            <h2 className="font-display text-lg font-bold text-ink-900">New study plan</h2>
+            <h2 className="font-display text-lg font-semibold text-ink-900">New study plan</h2>
             <p className="mt-0.5 text-[12px] leading-5 text-ink-500">
               Use one topic per line in the syllabus box. The scheduler builds a day-by-day mix of new
               study, spaced revision, timed practice and buffer.
@@ -666,7 +666,7 @@ function PlanForm({
           </div>
         )}
 
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-[#f0f0f0] pt-4">
           <p className="text-[10.5px] leading-4 text-ink-400">
             {aiConfigured
               ? "Gemini generates the schedule; dates and durations are validated before saving."
@@ -686,10 +686,10 @@ function PlanForm({
       </form>
 
       <aside className="space-y-4">
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
+        <div className="rounded-2xl border border-hairline bg-white p-5">
           <div className="flex items-center gap-2">
             <BookOpen className="h-4 w-4 text-violet-600" />
-            <h2 className="text-[12.5px] font-bold text-ink-900">What goes into every plan</h2>
+            <h2 className="text-[12.5px] font-semibold text-ink-900">What goes into every plan</h2>
           </div>
           <ul className="mt-3 space-y-2.5">
             {[
@@ -699,7 +699,7 @@ function PlanForm({
               { icon: Coffee, text: "Buffer and lighter final-day consolidation." },
             ].map((item) => (
               <li key={item.text} className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-slate-100 text-ink-500">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#e8e8ed] text-ink-500">
                   <item.icon className="h-3 w-3" />
                 </span>
                 <p className="text-[11px] leading-5 text-ink-500">{item.text}</p>
@@ -730,7 +730,7 @@ const TASK_STYLES: Record<string, string> = {
   study: "border-violet-100 bg-violet-50 text-violet-700",
   revision: "border-amber-100 bg-amber-50 text-amber-700",
   practice: "border-emerald-100 bg-emerald-50 text-emerald-700",
-  buffer: "border-slate-200 bg-slate-50 text-ink-500",
+  buffer: "border-hairline bg-parchment text-ink-500",
 };
 
 function PlanDetail({
@@ -770,8 +770,8 @@ function PlanDetail({
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-        <div className="bg-[linear-gradient(135deg,#F8F5FF,#FFFFFF_60%,#F7FBF9)] p-5 sm:p-6">
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+        <div className="bg-parchment p-5 sm:p-6">
           <div className="flex flex-wrap items-center gap-2">
             {plan.mode === "LIVE" ? (
               <ModeBadge mode="LIVE" />
@@ -792,7 +792,7 @@ function PlanDetail({
             {plan.model && <span className="font-mono text-[9.5px] text-ink-300">{plan.model}</span>}
           </div>
 
-          <h1 className="mt-3 font-display text-[clamp(1.55rem,2.7vw,2.2rem)] font-extrabold leading-tight tracking-[-0.035em] text-ink-950">
+          <h1 className="mt-3 font-display text-[clamp(1.55rem,2.7vw,2.2rem)] font-semibold leading-tight tracking-[-0.035em] text-ink-950">
             {plan.title}
           </h1>
           {plan.summary && (
@@ -803,8 +803,8 @@ function PlanDetail({
             <div className="flex items-center gap-2.5 rounded-xl border border-white bg-white/80 px-3 py-2.5">
               <CalendarDays className="h-4 w-4 text-violet-600" />
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">Exam</p>
-                <p className="text-[11.5px] font-bold text-ink-800">
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-ink-400">Exam</p>
+                <p className="text-[11.5px] font-semibold text-ink-800">
                   {parseDate(plan.examDate).toLocaleDateString("en-GB", {
                     day: "numeric",
                     month: "short",
@@ -817,8 +817,8 @@ function PlanDetail({
             <div className="flex items-center gap-2.5 rounded-xl border border-white bg-white/80 px-3 py-2.5">
               <Timer className="h-4 w-4 text-sky-600" />
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">Runway</p>
-                <p className="text-[11.5px] font-bold text-ink-800">
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-ink-400">Runway</p>
+                <p className="text-[11.5px] font-semibold text-ink-800">
                   {daysLeft > 0 ? `${daysLeft} day${daysLeft === 1 ? "" : "s"} left` : daysLeft === 0 ? "Exam is today" : "Exam date passed"}
                 </p>
               </div>
@@ -826,8 +826,8 @@ function PlanDetail({
             <div className="flex items-center gap-2.5 rounded-xl border border-white bg-white/80 px-3 py-2.5">
               <PencilRuler className="h-4 w-4 text-emerald-600" />
               <div>
-                <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">Planned</p>
-                <p className="text-[11.5px] font-bold text-ink-800">
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-ink-400">Planned</p>
+                <p className="text-[11.5px] font-semibold text-ink-800">
                   {formatDuration(remainingMinutes)} left of {formatDuration(totalMinutes)}
                 </p>
               </div>
@@ -841,17 +841,17 @@ function PlanDetail({
           )}
         </div>
 
-        <div className="border-t border-slate-100 p-5 sm:p-6">
+        <div className="border-t border-[#f0f0f0] p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-[11px] font-bold text-ink-800">
+              <p className="text-[11px] font-semibold text-ink-800">
                 {doneCount} of {allTasks.length} tasks complete · {percent(progress / 100)}
               </p>
               <p className="text-[10px] text-ink-400">
                 {plan.days.length} study days · {plan.topics.length} topics · updated <TimeAgo value={plan.updatedAt} />
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-2">
               {nextDay && (
                 <Button
                   type="button"
@@ -884,8 +884,8 @@ function PlanDetail({
         </div>
 
         {plan.completedTopics.length > 0 && (
-          <div className="border-t border-slate-100 bg-emerald-50/30 px-5 py-3.5 sm:px-6">
-            <p className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-emerald-800">
+          <div className="border-t border-[#f0f0f0] bg-emerald-50/30 px-5 py-3.5 sm:px-6">
+            <p className="text-[9.5px] font-semibold uppercase tracking-[0.13em] text-emerald-800">
               Preserved completed topics
             </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -920,8 +920,8 @@ function PlanDetail({
               key={day.date}
               id={`day-${day.date}`}
               className={cn(
-                "scroll-mt-24 overflow-hidden rounded-2xl border bg-white shadow-card",
-                isToday ? "border-violet-300 ring-2 ring-violet-100" : "border-slate-200/80",
+                "scroll-mt-24 overflow-hidden rounded-2xl border bg-white",
+                isToday ? "border-violet-300 ring-2 ring-violet-100" : "border-hairline",
               )}
             >
               <button
@@ -929,7 +929,7 @@ function PlanDetail({
                 onClick={() =>
                   setExpanded((current) => ({ ...current, [day.date]: !open }))
                 }
-                className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition hover:bg-slate-50/70 sm:px-5"
+                className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition hover:bg-parchment sm:px-5"
                 aria-expanded={open}
               >
                 <span
@@ -939,17 +939,17 @@ function PlanDetail({
                       ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                       : isToday
                         ? "border-violet-200 bg-violet-50 text-violet-700"
-                        : "border-slate-200 bg-slate-50 text-ink-500",
+                        : "border-hairline bg-parchment text-ink-500",
                   )}
                 >
                   {dayComplete ? (
                     <CheckCircle2 className="h-4 w-4" />
                   ) : (
                     <>
-                      <span className="text-[9px] font-bold uppercase leading-none">
+                      <span className="text-[9px] font-semibold uppercase leading-none">
                         {format(parseDate(day.date), "MMM")}
                       </span>
-                      <span className="text-[12px] font-extrabold leading-tight">
+                      <span className="text-[12px] font-semibold leading-tight">
                         {format(parseDate(day.date), "d")}
                       </span>
                     </>
@@ -957,7 +957,7 @@ function PlanDetail({
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-1.5">
-                    <p className="text-[12.5px] font-bold text-ink-900">{day.label}</p>
+                    <p className="text-[12.5px] font-semibold text-ink-900">{day.label}</p>
                     {isToday && <Badge variant="violet" size="sm">Today</Badge>}
                     {isPast && !dayComplete && <Badge variant="orange" size="sm">Overdue</Badge>}
                     {dayComplete && <Badge variant="green" size="sm">Complete</Badge>}
@@ -970,7 +970,7 @@ function PlanDetail({
                   <span className="font-mono text-[9.5px] text-ink-400">
                     {dayDone}/{day.tasks.length}
                   </span>
-                  <span className="h-1 w-14 overflow-hidden rounded-full bg-slate-100">
+                  <span className="h-1 w-14 overflow-hidden rounded-full bg-[#e8e8ed]">
                     <span
                       className={cn("block h-full rounded-full", dayComplete ? "bg-emerald-500" : "bg-violet-500")}
                       style={{ width: `${(dayDone / day.tasks.length) * 100}%` }}
@@ -984,7 +984,7 @@ function PlanDetail({
               </button>
 
               {open && (
-                <div className="space-y-2 border-t border-slate-100 p-3 sm:p-4">
+                <div className="space-y-2 border-t border-[#f0f0f0] p-3 sm:p-4">
                   {day.tasks.map((task) => {
                     const done = completed.has(task.id);
                     const Icon = TASK_ICONS[task.type] ?? BookOpen;
@@ -994,7 +994,7 @@ function PlanDetail({
                         key={task.id}
                         className={cn(
                           "flex items-start gap-3 rounded-xl border p-3 transition",
-                          done ? "border-slate-100 bg-slate-50/60" : "border-slate-200/70 bg-white",
+                          done ? "border-[#f0f0f0] bg-parchment/60" : "border-hairline bg-white",
                         )}
                       >
                         <button
@@ -1049,10 +1049,10 @@ function PlanDetail({
         })}
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5">
+      <div className="rounded-2xl border border-hairline bg-white p-5">
         <div className="flex items-center gap-2">
           <GraduationCap className="h-4 w-4 text-violet-600" />
-          <h2 className="text-[12.5px] font-bold text-ink-900">Topics in this plan</h2>
+          <h2 className="text-[12.5px] font-semibold text-ink-900">Topics in this plan</h2>
         </div>
         <div className="mt-2.5 flex flex-wrap gap-1.5">
           {plan.topics.map((topic) => (

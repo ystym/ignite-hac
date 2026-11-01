@@ -491,8 +491,8 @@ export function UploadStudio({
             "Add GEMINI_API_KEY to .env and restart the server to analyze your own material. The curated sample workspace remains fully explorable."}
       </Callout>
 
-      <div className="grid gap-5 xl:grid-cols-[1.5fr_1fr]">
-        <div className="space-y-5">
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <div className="min-w-0 space-y-5">
           <Tabs defaultValue="files">
             <TabsList>
               <TabsTrigger value="files">
@@ -524,7 +524,7 @@ export function UploadStudio({
                     ? "border-violet-400 bg-violet-50"
                     : live
                       ? "border-slate-300 bg-white hover:border-violet-300 hover:bg-violet-50/30"
-                      : "border-slate-200 bg-white/60",
+                      : "border-hairline bg-white/60",
                 )}
               >
                 <input
@@ -539,10 +539,10 @@ export function UploadStudio({
                     event.target.value = "";
                   }}
                 />
-                <div className={cn("flex h-16 w-16 items-center justify-center rounded-2xl", live ? "bg-violet-50 text-violet-600" : "bg-slate-100 text-slate-400")}>
+                <div className={cn("flex h-16 w-16 items-center justify-center rounded-2xl", live ? "bg-violet-50 text-violet-600" : "bg-[#e8e8ed] text-ink-400")}>
                   <UploadCloud className="h-8 w-8" strokeWidth={1.6} />
                 </div>
-                <h2 className="mt-5 font-display text-xl font-bold text-ink-900">
+                <h2 className="mt-5 font-display text-xl font-semibold text-ink-900">
                   Drop your messy material here
                 </h2>
                 <p className="mt-1.5 max-w-sm text-[13px] leading-6 text-ink-500">
@@ -594,7 +594,7 @@ export function UploadStudio({
               {jobs.filter((job) => job.mode === "upload").length > 0 && (
                 <div className="mt-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <p className="text-[12px] font-bold text-ink-700">
+                    <p className="text-[12px] font-semibold text-ink-700">
                       Queue · {jobs.filter((job) => job.mode === "upload").length} file{jobs.filter((job) => job.mode === "upload").length === 1 ? "" : "s"}
                     </p>
                     <Button
@@ -630,7 +630,7 @@ export function UploadStudio({
                     <FileText className="h-5 w-5" />
                   </span>
                   <div>
-                    <h2 className="font-display text-lg font-bold text-ink-900">Paste your syllabus or notes</h2>
+                    <h2 className="font-display text-lg font-semibold text-ink-900">Paste your syllabus or notes</h2>
                     <p className="mt-1 text-[12.5px] leading-6 text-ink-500">
                       Typed input is stored verbatim and labelled as typed. AI notes and retrieval
                       are generated from that exact text.
@@ -690,7 +690,7 @@ export function UploadStudio({
 
           {jobs.some((job) => job.mode === "text") && (
             <div className="space-y-3">
-              <p className="text-[12px] font-bold text-ink-700">Typed material queue</p>
+              <p className="text-[12px] font-semibold text-ink-700">Typed material queue</p>
               {jobs
                 .filter((job) => job.mode === "text")
                 .map((job) => (
@@ -706,12 +706,12 @@ export function UploadStudio({
           )}
         </div>
 
-        <aside className="space-y-5">
+        <aside className="min-w-0 space-y-5">
           <Card className="overflow-hidden">
-            <div className="border-b border-slate-100 bg-[linear-gradient(135deg,#F7F4FF,#FFF)] px-5 py-4">
+            <div className="border-b border-[#f0f0f0] bg-parchment px-5 py-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="font-display text-[15px] font-bold text-ink-900">Bundled samples</h2>
+                  <h2 className="font-display text-[15px] font-semibold text-ink-900">Bundled samples</h2>
                   <p className="mt-0.5 text-[11px] text-ink-400">
                     {live ? "Run real Gemini analysis on these files." : "Open the labelled curated workspace."}
                   </p>
@@ -719,12 +719,12 @@ export function UploadStudio({
                 <Badge variant={live ? "green" : "amber"}>{live ? "Live" : "Demo"}</Badge>
               </div>
             </div>
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-[#f0f0f0]">
               {SAMPLE_CATALOG.map((sample) => (
                 <div key={sample.key} className="flex items-start gap-3 p-4">
                   <FileTypeIcon type={sample.kind} />
                   <div className="min-w-0 flex-1">
-                    <p className="text-[12.5px] font-bold text-ink-800">{sample.title}</p>
+                    <p className="text-[12.5px] font-semibold text-ink-800">{sample.title}</p>
                     <p className="mt-0.5 text-[10.5px] leading-4 text-ink-400">{sample.description}</p>
                     <p className="mt-1.5 text-[9.5px] font-semibold uppercase tracking-wider text-ink-300">
                       {sample.pages}
@@ -749,12 +749,12 @@ export function UploadStudio({
           <Card className="p-5">
             <div className="flex items-center gap-2">
               <Info className="h-4 w-4 text-sky-600" />
-              <h2 className="text-[13px] font-bold text-ink-900">How processing works</h2>
+              <h2 className="text-[13px] font-semibold text-ink-900">How processing works</h2>
             </div>
             <ol className="mt-4 space-y-3">
               {STUDY_STAGES.map((stage, index) => (
                 <li key={stage.key} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-100 font-mono text-[9px] font-bold text-ink-400">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#e8e8ed] font-mono text-[9px] font-semibold text-ink-400">
                     {index + 1}
                   </span>
                   <div>
@@ -764,7 +764,7 @@ export function UploadStudio({
                 </li>
               ))}
             </ol>
-            <p className="mt-4 rounded-lg bg-slate-50 p-2.5 text-[10px] leading-4 text-ink-400">
+            <p className="mt-4 rounded-lg bg-parchment p-2.5 text-[10px] leading-4 text-ink-400">
               Progress is read from persisted database stages, not a simulated timer. Failed notes or
               indexing remain separately retryable.
             </p>
@@ -772,11 +772,11 @@ export function UploadStudio({
 
           <Card className="p-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-[13px] font-bold text-ink-900">What gets stored</h2>
+              <h2 className="text-[13px] font-semibold text-ink-900">What gets stored</h2>
               <ModeBadge mode={live ? "LIVE" : "DEMO"} />
             </div>
             <div className="mt-3 space-y-2 text-[11px] leading-5 text-ink-500">
-              <p>• Original file in <code className="rounded bg-slate-100 px-1">data/uploads</code></p>
+              <p>• Original file in <code className="rounded bg-[#e8e8ed] px-1">data/uploads</code></p>
               <p>• Extracted blocks, warnings and confidence</p>
               <p>• Retrieval chunks + embedding vectors</p>
               <p>• Notes, quizzes, attempts and study plans in SQLite</p>
@@ -808,15 +808,15 @@ function JobCard({
   return (
     <div
       className={cn(
-        "rounded-2xl border bg-white p-4 shadow-card transition",
-        job.status === "failed" ? "border-rose-200" : job.status === "ready" ? "border-emerald-200" : "border-slate-200/80",
+        "rounded-2xl border bg-white p-4 transition",
+        job.status === "failed" ? "border-rose-200" : job.status === "ready" ? "border-emerald-200" : "border-hairline",
       )}
     >
       <div className="flex items-start gap-3">
         <FileTypeIcon type={job.fileType} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <p className="truncate text-[12.5px] font-bold text-ink-800">{job.name}</p>
+            <p className="truncate text-[12.5px] font-semibold text-ink-800">{job.name}</p>
             <span className="text-[10px] text-ink-300">{formatBytes(job.size)}</span>
             <StatusBadge status={job.status} />
           </div>

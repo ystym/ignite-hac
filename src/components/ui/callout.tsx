@@ -7,22 +7,22 @@ const VARIANTS: Record<
 > = {
   info: {
     icon: Info,
-    className: "border-sky-200 bg-sky-50/75 text-sky-950",
-    iconClass: "text-sky-600",
+    className: "border-[#d2d2d7] bg-[#f5f5f7] text-ink-800",
+    iconClass: "text-action",
   },
   warning: {
     icon: AlertTriangle,
-    className: "border-amber-200 bg-amber-50/80 text-amber-950",
+    className: "border-amber-200 bg-amber-50/70 text-amber-950",
     iconClass: "text-amber-600",
   },
   danger: {
     icon: ShieldAlert,
-    className: "border-rose-200 bg-rose-50/80 text-rose-950",
+    className: "border-rose-200 bg-rose-50/70 text-rose-950",
     iconClass: "text-rose-600",
   },
   success: {
     icon: CheckCircle2,
-    className: "border-emerald-200 bg-emerald-50/80 text-emerald-950",
+    className: "border-emerald-200 bg-emerald-50/70 text-emerald-950",
     iconClass: "text-emerald-600",
   },
 };
@@ -43,12 +43,12 @@ export function Callout({
   const config = VARIANTS[variant];
   const Icon = config.icon;
   return (
-    <div className={cn("rounded-2xl border p-4 sm:p-5", config.className, className)}>
-      <div className="flex items-start gap-3">
-        <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", config.iconClass)} aria-hidden="true" />
+    <div className={cn("rounded-2xl border px-4 py-4 sm:px-5", config.className, className)}>
+      <div className="flex gap-3">
+        <Icon className={cn("mt-0.5 h-[18px] w-[18px] shrink-0", config.iconClass)} aria-hidden="true" />
         <div className="min-w-0 flex-1">
-          {title && <p className="text-sm font-bold">{title}</p>}
-          <div className="text-[13px] leading-6 opacity-90">{children}</div>
+          {title && <p className="text-[14px] font-semibold leading-5">{title}</p>}
+          <div className="text-[13.5px] leading-6 opacity-85">{children}</div>
           {action && <div className="mt-3">{action}</div>}
         </div>
       </div>

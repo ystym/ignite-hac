@@ -194,7 +194,7 @@ export function QuizRunner({
                 {questions.length} questions · {answeredCount} answered
               </span>
             </div>
-            <h1 className="mt-2 font-display text-[clamp(1.35rem,2.2vw,1.85rem)] font-extrabold tracking-[-0.03em] text-ink-950">
+            <h1 className="mt-2 font-display text-[clamp(1.35rem,2.2vw,1.85rem)] font-semibold tracking-[-0.03em] text-ink-950">
               {quiz.title}
             </h1>
           </div>
@@ -227,9 +227,9 @@ export function QuizRunner({
         )}
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_230px]">
-          <div className="rounded-2xl border border-slate-200/80 bg-white shadow-card">
-            <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 px-5 py-3.5">
-              <span className="rounded-lg bg-ink-900 px-2 py-1 font-mono text-[10px] font-bold text-white">
+          <div className="rounded-2xl border border-hairline bg-white">
+            <div className="flex flex-wrap items-center gap-2 border-b border-[#f0f0f0] px-5 py-3.5">
+              <span className="rounded-lg bg-ink-900 px-2 py-1 font-mono text-[10px] font-semibold text-white">
                 Q{current + 1} / {questions.length}
               </span>
               <Badge
@@ -253,7 +253,7 @@ export function QuizRunner({
             </div>
 
             <div className="p-5 sm:p-6">
-              <h2 className="font-display text-[18px] font-bold leading-snug text-ink-950">
+              <h2 className="font-display text-[18px] font-semibold leading-snug text-ink-950">
                 {question.question}
               </h2>
 
@@ -272,12 +272,12 @@ export function QuizRunner({
                         "flex w-full items-start gap-3 rounded-xl border p-3.5 text-left transition",
                         selected
                           ? "border-violet-400 bg-violet-50 ring-2 ring-violet-100"
-                          : "border-slate-200 bg-white hover:border-violet-200 hover:bg-violet-50/40",
+                          : "border-hairline bg-white hover:border-violet-200 hover:bg-violet-50/40",
                       )}
                     >
                       <span
                         className={cn(
-                          "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] font-bold",
+                          "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[10px] font-semibold",
                           selected
                             ? "border-violet-500 bg-violet-600 text-white"
                             : "border-slate-300 bg-white text-ink-400",
@@ -292,7 +292,7 @@ export function QuizRunner({
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-5 py-4">
+            <div className="flex items-center justify-between gap-3 border-t border-[#f0f0f0] px-5 py-4">
               <Button
                 type="button"
                 variant="outline"
@@ -333,10 +333,10 @@ export function QuizRunner({
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-card">
+            <div className="rounded-2xl border border-hairline bg-white p-4">
               <div className="flex items-center gap-2">
                 <ListChecks className="h-4 w-4 text-violet-600" />
-                <h2 className="text-[12px] font-bold text-ink-900">Question map</h2>
+                <h2 className="text-[12px] font-semibold text-ink-900">Question map</h2>
               </div>
               <div className="mt-3 grid grid-cols-5 gap-1.5">
                 {questions.map((item, index) => {
@@ -348,12 +348,12 @@ export function QuizRunner({
                       type="button"
                       onClick={() => setCurrent(index)}
                       className={cn(
-                        "flex h-8 items-center justify-center rounded-lg border text-[10px] font-bold transition",
+                        "flex h-8 items-center justify-center rounded-lg border text-[10px] font-semibold transition",
                         active
                           ? "border-ink-900 bg-ink-900 text-white"
                           : answered
                             ? "border-violet-200 bg-violet-50 text-violet-800"
-                            : "border-slate-200 bg-white text-ink-400 hover:border-slate-300",
+                            : "border-hairline bg-white text-ink-400 hover:border-slate-300",
                       )}
                       aria-label={`Go to question ${index + 1}${answered ? ", answered" : ", unanswered"}`}
                       aria-current={active ? "step" : undefined}
@@ -367,7 +367,7 @@ export function QuizRunner({
                 <span>{answeredCount} answered</span>
                 <span>{questions.length - answeredCount} left</span>
               </div>
-              <div className="mt-3 border-t border-slate-100 pt-3">
+              <div className="mt-3 border-t border-[#f0f0f0] pt-3">
                 <Button
                   type="button"
                   size="sm"
@@ -387,11 +387,11 @@ export function QuizRunner({
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-200/80 bg-white p-4">
+            <div className="rounded-2xl border border-hairline bg-white p-4">
               <div className="flex items-center gap-2">
                 <FileTypeIcon type={document.fileType} className="h-8 w-8 rounded-lg" iconClassName="h-3.5 w-3.5" />
                 <div className="min-w-0">
-                  <p className="truncate text-[11px] font-bold text-ink-800">{document.title}</p>
+                  <p className="truncate text-[11px] font-semibold text-ink-800">{document.title}</p>
                   <p className="text-[9.5px] text-ink-400">Grounded source document</p>
                 </div>
               </div>
@@ -453,9 +453,8 @@ function QuizIntro({
         </Link>
       </Button>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
         <div className="relative overflow-hidden bg-ink-950 p-6 text-white sm:p-8">
-          <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl" />
           <div className="pointer-events-none absolute inset-0 dot-grid opacity-[0.08]" />
           <div className="relative">
             <div className="flex flex-wrap items-center gap-2">
@@ -469,7 +468,7 @@ function QuizIntro({
                 <Badge variant="green">Live · {quiz.model ?? "Gemini"}</Badge>
               )}
             </div>
-            <h1 className="mt-4 max-w-3xl font-display text-[clamp(1.8rem,4vw,2.7rem)] font-extrabold leading-[1.08] tracking-[-0.04em]">
+            <h1 className="mt-4 max-w-3xl font-display text-[clamp(1.8rem,4vw,2.7rem)] font-semibold leading-[1.08] tracking-[-0.04em]">
               {quiz.title}
             </h1>
             <p className="mt-3 max-w-2xl text-[13px] leading-6 text-white/60">
@@ -480,14 +479,14 @@ function QuizIntro({
         </div>
 
         <div className="grid gap-4 p-5 sm:grid-cols-3 sm:p-6">
-          <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-400">Questions</p>
-            <p className="mt-1.5 font-display text-2xl font-extrabold text-ink-950">{quiz.questionCount}</p>
+          <div className="rounded-xl border border-[#f0f0f0] bg-parchment p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-ink-400">Questions</p>
+            <p className="mt-1.5 font-display text-2xl font-semibold text-ink-950">{quiz.questionCount}</p>
             <p className="text-[10px] text-ink-400">{difficultyLabel(quiz.difficulty)} difficulty</p>
           </div>
-          <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-400">Source material</p>
-            <p className="mt-1.5 truncate text-[12.5px] font-bold text-ink-900">{document.title}</p>
+          <div className="rounded-xl border border-[#f0f0f0] bg-parchment p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-ink-400">Source material</p>
+            <p className="mt-1.5 truncate text-[12.5px] font-semibold text-ink-900">{document.title}</p>
             <Link
               href={`/documents/${document.id}`}
               className="mt-0.5 inline-flex items-center gap-1 text-[10px] font-semibold text-violet-700 hover:underline"
@@ -495,9 +494,9 @@ function QuizIntro({
               <BookOpenCheck className="h-3 w-3" /> Inspect what was read
             </Link>
           </div>
-          <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-4">
-            <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-ink-400">Your best</p>
-            <p className="mt-1.5 font-display text-2xl font-extrabold text-ink-950">
+          <div className="rounded-xl border border-[#f0f0f0] bg-parchment p-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.13em] text-ink-400">Your best</p>
+            <p className="mt-1.5 font-display text-2xl font-semibold text-ink-950">
               {best ? percent(best.score / best.total) : "—"}
             </p>
             <p className="text-[10px] text-ink-400">
@@ -506,7 +505,7 @@ function QuizIntro({
           </div>
         </div>
 
-        <div className="border-t border-slate-100 p-5 sm:p-6">
+        <div className="border-t border-[#f0f0f0] p-5 sm:p-6">
           {isDemo && (
             <Callout variant="warning" title="This quiz is curated sample content" className="mb-4">
               It was authored for the demo, not generated live by Gemini. Attempts are genuinely scored
@@ -534,19 +533,19 @@ function QuizIntro({
       </div>
 
       {attempts.length > 0 && (
-        <div className="mt-5 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card sm:p-6">
+        <div className="mt-5 rounded-2xl border border-hairline bg-white p-5 sm:p-6">
           <div className="flex items-center gap-2">
             <Trophy className="h-4 w-4 text-amber-500" />
-            <h2 className="font-display text-[15px] font-bold text-ink-900">Recent attempts</h2>
+            <h2 className="font-display text-[15px] font-semibold text-ink-900">Recent attempts</h2>
           </div>
-          <div className="mt-3 divide-y divide-slate-100">
+          <div className="mt-3 divide-y divide-[#f0f0f0]">
             {attempts.slice(0, 10).map((attempt, index) => {
               const ratio = attempt.total > 0 ? attempt.score / attempt.total : 0;
               return (
                 <div key={attempt.id} className="flex items-center gap-3 py-2.5">
                   <span
                     className={cn(
-                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-extrabold",
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold",
                       ratio >= 0.75
                         ? "bg-emerald-50 text-emerald-700"
                         : ratio >= 0.5
@@ -610,8 +609,8 @@ function QuizResults({
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         <div className="space-y-5">
-          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-            <div className="bg-[linear-gradient(135deg,#F8F5FF,#FFFFFF)] p-5 sm:p-7">
+          <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+            <div className="bg-parchment p-5 sm:p-7">
               <div className="flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -620,7 +619,7 @@ function QuizResults({
                     </Badge>
                     <ModeBadge mode={quiz.mode} />
                   </div>
-                  <h1 className="mt-3 font-display text-[clamp(1.6rem,3vw,2.25rem)] font-extrabold tracking-[-0.035em] text-ink-950">
+                  <h1 className="mt-3 font-display text-[clamp(1.6rem,3vw,2.25rem)] font-semibold tracking-[-0.035em] text-ink-950">
                     {result.percentage >= 80
                       ? "Strong result."
                       : result.percentage >= 50
@@ -639,12 +638,12 @@ function QuizResults({
                 <div
                   className="relative flex h-32 w-32 shrink-0 items-center justify-center rounded-full"
                   style={{
-                    background: `conic-gradient(#6a3bfa ${result.percentage}%, #ECE9F8 0)`,
+                    background: `conic-gradient(#0066cc ${result.percentage}%, #e8e8ed 0)`,
                   }}
                   aria-label={`Score: ${result.percentage} percent`}
                 >
                   <div className="flex h-[104px] w-[104px] flex-col items-center justify-center rounded-full bg-white shadow-inner">
-                    <span className="font-display text-3xl font-extrabold tracking-[-0.05em] text-ink-950">
+                    <span className="font-display text-3xl font-semibold tracking-[-0.05em] text-ink-950">
                       {result.percentage}%
                     </span>
                     <span className="text-[10px] font-semibold text-ink-400">
@@ -655,17 +654,17 @@ function QuizResults({
               </div>
             </div>
 
-            <div className="grid grid-cols-3 divide-x divide-slate-100 border-t border-slate-100">
+            <div className="grid grid-cols-3 divide-x divide-[#f0f0f0] border-t border-[#f0f0f0]">
               <div className="p-4 text-center">
-                <p className="font-display text-xl font-extrabold text-emerald-700">{result.score}</p>
+                <p className="font-display text-xl font-semibold text-emerald-700">{result.score}</p>
                 <p className="text-[9.5px] uppercase tracking-wider text-ink-400">Correct</p>
               </div>
               <div className="p-4 text-center">
-                <p className="font-display text-xl font-extrabold text-rose-700">{incorrect}</p>
+                <p className="font-display text-xl font-semibold text-rose-700">{incorrect}</p>
                 <p className="text-[9.5px] uppercase tracking-wider text-ink-400">Incorrect</p>
               </div>
               <div className="p-4 text-center">
-                <p className="font-display text-xl font-extrabold text-ink-900">
+                <p className="font-display text-xl font-semibold text-ink-900">
                   {best ? percent(best.score / best.total) : "—"}
                 </p>
                 <p className="text-[9.5px] uppercase tracking-wider text-ink-400">Best recent</p>
@@ -674,7 +673,7 @@ function QuizResults({
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
+            <div className="flex rounded-xl border border-hairline bg-white p-1">
               <button
                 type="button"
                 onClick={() => setFilter("all")}
@@ -704,7 +703,7 @@ function QuizResults({
           {filtered.length === 0 ? (
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center">
               <Trophy className="mx-auto h-7 w-7 text-emerald-600" />
-              <p className="mt-2 font-display text-[16px] font-bold text-emerald-900">
+              <p className="mt-2 font-display text-[16px] font-semibold text-emerald-900">
                 No incorrect answers to review.
               </p>
               <p className="mt-1 text-[11.5px] text-emerald-800/70">
@@ -720,14 +719,14 @@ function QuizResults({
                   <article
                     key={item.id}
                     className={cn(
-                      "rounded-2xl border bg-white p-5 shadow-card",
+                      "rounded-2xl border bg-white p-5",
                       item.correct ? "border-emerald-200" : "border-rose-200",
                     )}
                   >
                     <div className="flex flex-wrap items-center gap-2">
                       <span
                         className={cn(
-                          "flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold",
+                          "flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-semibold",
                           item.correct ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700",
                         )}
                       >
@@ -761,7 +760,7 @@ function QuizResults({
                       </Badge>
                     </div>
 
-                    <h3 className="mt-2.5 font-display text-[15px] font-bold leading-snug text-ink-900">
+                    <h3 className="mt-2.5 font-display text-[15px] font-semibold leading-snug text-ink-900">
                       {item.question}
                     </h3>
 
@@ -778,29 +777,29 @@ function QuizResults({
                                 ? "border-emerald-200 bg-emerald-50/70 text-emerald-900"
                                 : selected
                                   ? "border-rose-200 bg-rose-50/70 text-rose-900"
-                                  : "border-slate-100 bg-slate-50/40 text-ink-500",
+                                  : "border-[#f0f0f0] bg-parchment/40 text-ink-500",
                             )}
                           >
                             <span
                               className={cn(
-                                "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[8px] font-bold",
+                                "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-[8px] font-semibold",
                                 correct
                                   ? "bg-emerald-600 text-white"
                                   : selected
                                     ? "bg-rose-500 text-white"
-                                    : "bg-slate-200 text-ink-500",
+                                    : "bg-[#d2d2d7] text-ink-500",
                               )}
                             >
                               {correct ? <Check className="h-2.5 w-2.5" /> : selected ? <X className="h-2.5 w-2.5" /> : String.fromCharCode(65 + optionIndex)}
                             </span>
                             <span className="flex-1">{option}</span>
                             {selected && (
-                              <span className="shrink-0 text-[8.5px] font-bold uppercase tracking-wider opacity-70">
+                              <span className="shrink-0 text-[8.5px] font-semibold uppercase tracking-wider opacity-70">
                                 Your answer
                               </span>
                             )}
                             {correct && !selected && (
-                              <span className="shrink-0 text-[8.5px] font-bold uppercase tracking-wider text-emerald-700">
+                              <span className="shrink-0 text-[8.5px] font-semibold uppercase tracking-wider text-emerald-700">
                                 Correct
                               </span>
                             )}
@@ -810,14 +809,14 @@ function QuizResults({
                     </div>
 
                     <div className="mt-3 rounded-xl border border-violet-100 bg-violet-50/50 p-3.5">
-                      <p className="text-[9.5px] font-bold uppercase tracking-[0.13em] text-violet-700">
+                      <p className="text-[9.5px] font-semibold uppercase tracking-[0.13em] text-violet-700">
                         Explanation
                       </p>
                       <p className="mt-1 text-[12px] leading-6 text-ink-600">{item.explanation}</p>
                     </div>
 
-                    <div className="mt-2.5 rounded-xl border border-slate-100 bg-slate-50/60 p-3.5">
-                      <p className="inline-flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.13em] text-ink-400">
+                    <div className="mt-2.5 rounded-xl border border-[#f0f0f0] bg-parchment/60 p-3.5">
+                      <p className="inline-flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.13em] text-ink-400">
                         <Quote className="h-3 w-3" /> Source excerpt
                       </p>
                       <p className="mt-1 border-l-2 border-slate-300 pl-2.5 text-[11px] leading-5 text-ink-500">
@@ -832,8 +831,8 @@ function QuizResults({
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
-            <h2 className="font-display text-[14px] font-bold text-ink-900">Next step</h2>
+          <div className="rounded-2xl border border-hairline bg-white p-5">
+            <h2 className="font-display text-[14px] font-semibold text-ink-900">Next step</h2>
             <div className="mt-3 space-y-2">
               <Button asChild variant="violet" size="sm" className="w-full justify-start">
                 <Link href={`/documents/${document.id}`}>
@@ -853,10 +852,10 @@ function QuizResults({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
+          <div className="rounded-2xl border border-hairline bg-white p-5">
             <div className="flex items-center gap-2">
               <Clock3 className="h-4 w-4 text-violet-600" />
-              <h2 className="text-[12px] font-bold text-ink-900">Attempt history</h2>
+              <h2 className="text-[12px] font-semibold text-ink-900">Attempt history</h2>
             </div>
             <div className="mt-3 space-y-2.5">
               {attempts.slice(0, 8).map((attempt, index) => {
@@ -865,7 +864,7 @@ function QuizResults({
                   <div key={attempt.id} className="flex items-center gap-2.5">
                     <span
                       className={cn(
-                        "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-extrabold",
+                        "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[9px] font-semibold",
                         ratio >= 0.75
                           ? "bg-emerald-50 text-emerald-700"
                           : ratio >= 0.5
@@ -886,7 +885,7 @@ function QuizResults({
                 );
               })}
             </div>
-            <p className="mt-3 border-t border-slate-100 pt-3 text-[9.5px] leading-4 text-ink-400">
+            <p className="mt-3 border-t border-[#f0f0f0] pt-3 text-[9.5px] leading-4 text-ink-400">
               Scores are calculated from the stored key. There is no accuracy percentage claim about the
               AI itself.
             </p>

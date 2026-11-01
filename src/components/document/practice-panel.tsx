@@ -114,14 +114,14 @@ export function PracticePanel({
         </Callout>
       )}
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
+      <div className="rounded-2xl border border-hairline bg-white p-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
               <ListChecks className="h-5 w-5" />
             </span>
             <div>
-              <h2 className="font-display text-[16px] font-bold text-ink-900">Grounded practice</h2>
+              <h2 className="font-display text-[16px] font-semibold text-ink-900">Grounded practice</h2>
               <p className="mt-0.5 text-[11.5px] leading-5 text-ink-400">
                 Every generated question must quote an extracted passage. Scoring happens on the server.
               </p>
@@ -130,7 +130,7 @@ export function PracticePanel({
           {canGenerate && (
             <div className="flex flex-wrap items-end gap-2">
               <div>
-                <label htmlFor="quiz-difficulty" className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-ink-400">
+                <label htmlFor="quiz-difficulty" className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-ink-400">
                   Difficulty
                 </label>
                 <Select
@@ -147,7 +147,7 @@ export function PracticePanel({
                 </Select>
               </div>
               <div>
-                <label htmlFor="quiz-count" className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-ink-400">
+                <label htmlFor="quiz-count" className="mb-1 block text-[10px] font-semibold uppercase tracking-wider text-ink-400">
                   Questions
                 </label>
                 <Select
@@ -199,7 +199,7 @@ export function PracticePanel({
             return (
               <article
                 key={quiz.id}
-                className="flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card"
+                className="flex flex-col rounded-2xl border border-hairline bg-white p-5"
               >
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge
@@ -220,17 +220,17 @@ export function PracticePanel({
                     {quiz.questionCount} question{quiz.questionCount === 1 ? "" : "s"}
                   </span>
                 </div>
-                <h3 className="mt-2.5 font-display text-[16px] font-bold leading-snug text-ink-900">
+                <h3 className="mt-2.5 font-display text-[16px] font-semibold leading-snug text-ink-900">
                   {quiz.title}
                 </h3>
                 <p className="mt-1 text-[10.5px] text-ink-400">Created <TimeAgo value={quiz.createdAt} /></p>
 
-                <div className="mt-4 flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2.5">
+                <div className="mt-4 flex items-center gap-2 rounded-xl bg-parchment px-3 py-2.5">
                   {attempt ? (
                     <>
                       <Trophy className="h-4 w-4 shrink-0 text-amber-500" />
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11.5px] font-bold text-ink-800">
+                        <p className="text-[11.5px] font-semibold text-ink-800">
                           Best recent attempt: {attempt.score}/{attempt.total} · {percent(ratio)}
                         </p>
                         <p className="text-[9.5px] text-ink-400">
@@ -271,7 +271,7 @@ export function PracticePanel({
         </div>
       )}
 
-      <p className="rounded-xl border border-slate-100 bg-slate-50 px-3.5 py-2.5 text-[10px] leading-4 text-ink-400">
+      <p className="rounded-xl border border-[#f0f0f0] bg-parchment px-3.5 py-2.5 text-[10px] leading-4 text-ink-400">
         Quiz attempts are scored server-side from the stored correct answers. The quiz page sends only
         question IDs and selected options; correct answers and explanations arrive after submission.
       </p>

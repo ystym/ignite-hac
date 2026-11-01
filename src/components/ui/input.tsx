@@ -1,6 +1,9 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
+const fieldBase =
+  "w-full border border-[#d2d2d7] bg-white text-[15px] text-ink-900 transition placeholder:text-ink-400 focus:border-action-focus focus:outline-none focus:ring-4 focus:ring-[#0071e3]/10 disabled:cursor-not-allowed disabled:bg-parchment disabled:text-ink-400";
+
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;
 }
@@ -12,8 +15,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       ref={ref}
       aria-invalid={invalid || undefined}
       className={cn(
-        "flex h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-ink-900 shadow-sm transition placeholder:text-ink-300 focus:border-violet-400 focus:outline-none focus:ring-4 focus:ring-violet-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-ink-400",
-        invalid && "border-rose-300 focus:border-rose-400 focus:ring-rose-100",
+        fieldBase,
+        "h-11 rounded-full px-5",
+        invalid && "border-[#d70015] focus:border-[#d70015] focus:ring-[#d70015]/10",
         className,
       )}
       {...props}
@@ -30,8 +34,9 @@ const Textarea = React.forwardRef<
     ref={ref}
     aria-invalid={invalid || undefined}
     className={cn(
-      "flex min-h-[120px] w-full resize-y rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm leading-6 text-ink-900 shadow-sm transition placeholder:text-ink-300 focus:border-violet-400 focus:outline-none focus:ring-4 focus:ring-violet-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-ink-400",
-      invalid && "border-rose-300 focus:border-rose-400 focus:ring-rose-100",
+      fieldBase,
+      "flex min-h-[120px] resize-y rounded-2xl px-4 py-3 leading-6",
+      invalid && "border-[#d70015] focus:border-[#d70015] focus:ring-[#d70015]/10",
       className,
     )}
     {...props}
@@ -43,7 +48,7 @@ const Label = React.forwardRef<HTMLLabelElement, React.LabelHTMLAttributes<HTMLL
   ({ className, ...props }, ref) => (
     <label
       ref={ref}
-      className={cn("text-[13px] font-semibold text-ink-700", className)}
+      className={cn("text-[13px] font-semibold tracking-[-0.01em] text-ink-700", className)}
       {...props}
     />
   ),
@@ -55,7 +60,8 @@ const Select = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HT
     <select
       ref={ref}
       className={cn(
-        "flex h-11 w-full appearance-none rounded-xl border border-slate-200 bg-white bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%235B6188%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m4%206%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat px-3.5 pr-9 text-sm text-ink-900 shadow-sm transition focus:border-violet-400 focus:outline-none focus:ring-4 focus:ring-violet-100 disabled:bg-slate-50",
+        fieldBase,
+        "flex h-11 appearance-none rounded-full bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22none%22%20stroke%3D%22%236e6e73%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m4%206%204%204%204-4%22%2F%3E%3C%2Fsvg%3E')] bg-[length:16px] bg-[right_16px_center] bg-no-repeat py-0 pl-5 pr-10",
         className,
       )}
       {...props}

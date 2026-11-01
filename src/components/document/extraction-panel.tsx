@@ -213,11 +213,11 @@ export function ExtractionPanel({
         </Callout>
       )}
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white shadow-card">
-        <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="rounded-2xl border border-hairline bg-white">
+        <div className="flex flex-col gap-3 border-b border-[#f0f0f0] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="font-display text-[16px] font-bold text-ink-900">
+              <h2 className="font-display text-[16px] font-semibold text-ink-900">
                 What the extractor read
               </h2>
               <Badge variant="default">
@@ -250,10 +250,10 @@ export function ExtractionPanel({
         </div>
 
         {document.warnings.length > 0 && (
-          <div className="border-b border-slate-100 bg-amber-50/40 px-5 py-4">
+          <div className="border-b border-[#f0f0f0] bg-amber-50/40 px-5 py-4">
             <div className="flex items-center gap-2">
               <TriangleAlert className="h-4 w-4 text-amber-600" />
-              <h3 className="text-[12px] font-bold text-ink-900">Extraction warnings</h3>
+              <h3 className="text-[12px] font-semibold text-ink-900">Extraction warnings</h3>
             </div>
             <div className="mt-3 space-y-2">
               {document.warnings.map((warning, index) => (
@@ -265,7 +265,7 @@ export function ExtractionPanel({
 
         <div className="space-y-5 p-5">
           {document.blocks.length === 0 && (
-            <div className="rounded-xl border border-dashed border-slate-200 p-8 text-center">
+            <div className="rounded-xl border border-dashed border-hairline p-8 text-center">
               <FileWarning className="mx-auto h-6 w-6 text-ink-300" />
               <p className="mt-2 text-[12.5px] text-ink-500">
                 No extraction blocks are stored. Nothing was invented to fill the space.
@@ -276,8 +276,8 @@ export function ExtractionPanel({
           {groups.map(([group, blocks]) => (
             <section key={group}>
               <div className="mb-2.5 flex items-center gap-2">
-                <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-ink-400">{group}</p>
-                <span className="h-px flex-1 bg-slate-100" />
+                <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-ink-400">{group}</p>
+                <span className="h-px flex-1 bg-[#e8e8ed]" />
                 <span className="text-[10px] text-ink-300">{blocks.length} blocks</span>
               </div>
               <div className="space-y-2">
@@ -293,7 +293,7 @@ export function ExtractionPanel({
                           ? "border-rose-200 bg-rose-50/40"
                           : manuallyCorrected
                             ? "border-emerald-200 bg-emerald-50/30"
-                            : "border-slate-200/80 bg-white"
+                            : "border-hairline bg-white"
                       }`}
                     >
                       <div className="flex flex-wrap items-center gap-2">
@@ -327,7 +327,7 @@ export function ExtractionPanel({
                             <button
                               type="button"
                               onClick={() => startCorrection(block)}
-                              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-violet-700 transition hover:bg-violet-50"
+                              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold text-violet-700 transition hover:bg-violet-50"
                             >
                               <PencilLine className="h-3 w-3" /> Correct
                             </button>
@@ -338,7 +338,7 @@ export function ExtractionPanel({
                                 setEditingId(null);
                                 setDraft("");
                               }}
-                              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-ink-400 transition hover:bg-slate-100"
+                              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-semibold text-ink-400 transition hover:bg-[#e8e8ed]"
                             >
                               <X className="h-3 w-3" /> Cancel
                             </button>
@@ -385,7 +385,7 @@ export function ExtractionPanel({
                       )}
 
                       {block.note && !isEditing && (
-                        <p className="mt-2 flex items-start gap-1.5 rounded-lg bg-slate-50 px-2.5 py-2 text-[10px] leading-4 text-ink-500">
+                        <p className="mt-2 flex items-start gap-1.5 rounded-lg bg-parchment px-2.5 py-2 text-[10px] leading-4 text-ink-500">
                           <Info className="mt-0.5 h-3 w-3 shrink-0" />
                           {block.note}
                         </p>
@@ -398,7 +398,7 @@ export function ExtractionPanel({
           ))}
         </div>
 
-        <div className="flex items-start gap-2 border-t border-slate-100 bg-slate-50/60 px-5 py-3.5">
+        <div className="flex items-start gap-2 border-t border-[#f0f0f0] bg-parchment/60 px-5 py-3.5">
           <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink-300" />
           <p className="text-[10.5px] leading-5 text-ink-400">
             Confidence is model-reported, not calibrated. Corrections set the search index to stale and

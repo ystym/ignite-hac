@@ -172,14 +172,14 @@ export function AskPanel({
         </div>
       )}
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3.5 sm:px-5">
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+        <div className="flex items-center justify-between border-b border-[#f0f0f0] px-4 py-3.5 sm:px-5">
           <div className="flex items-center gap-2.5">
             <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-violet-600">
               <MessagesSquare className="h-4 w-4" />
             </span>
             <div>
-              <h2 className="text-[13px] font-bold text-ink-900">Ask this material</h2>
+              <h2 className="text-[13px] font-semibold text-ink-900">Ask this material</h2>
               <p className="text-[10px] text-ink-400">
                 {messages.length} message{messages.length === 1 ? "" : "s"} · answers cite retrieved
                 passages
@@ -225,13 +225,13 @@ export function AskPanel({
           </Dialog>
         </div>
 
-        <div className="max-h-[600px] min-h-[330px] space-y-4 overflow-y-auto bg-[#FBFBFE] p-4 sm:p-5">
+        <div className="max-h-[600px] min-h-[330px] space-y-4 overflow-y-auto bg-parchment p-4 sm:p-5">
           {messages.length === 0 && (
             <div className="flex h-full min-h-[280px] flex-col items-center justify-center text-center">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-50 text-violet-600 ring-1 ring-violet-100">
                 <ShieldQuestion className="h-6 w-6" />
               </span>
-              <h3 className="mt-4 font-display text-[16px] font-bold text-ink-900">
+              <h3 className="mt-4 font-display text-[16px] font-semibold text-ink-900">
                 Ask only what the material supports
               </h3>
               <p className="mt-1.5 max-w-md text-[12px] leading-5 text-ink-500">
@@ -246,7 +246,7 @@ export function AskPanel({
                       type="button"
                       onClick={() => ask(suggestion)}
                       disabled={!canAsk}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-ink-600 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="rounded-full border border-hairline bg-white px-3 py-1.5 text-[11px] font-medium text-ink-600 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-800 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {suggestion}
                     </button>
@@ -259,15 +259,15 @@ export function AskPanel({
           {messages.map((message) =>
             message.role === "user" ? (
               <div key={message.id} className="flex justify-end">
-                <div className="max-w-[86%] rounded-2xl rounded-br-md bg-ink-900 px-4 py-2.5 text-[12.5px] leading-6 text-white shadow-sm">
+                <div className="max-w-[86%] rounded-2xl rounded-br-md bg-ink-900 px-4 py-2.5 text-[12.5px] leading-6 text-white">
                   {message.content}
                 </div>
               </div>
             ) : (
               <div key={message.id} className="flex justify-start">
-                <div className="w-full max-w-[92%] rounded-2xl rounded-bl-md border border-slate-200/80 bg-white p-4 shadow-sm">
+                <div className="w-full max-w-[92%] rounded-2xl rounded-bl-md border border-hairline bg-white p-4">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-violet-600">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-violet-600">
                       <BookOpenCheck className="h-3 w-3" /> Study assistant
                     </span>
                     {message.mode === "DEMO" ? (
@@ -296,13 +296,13 @@ export function AskPanel({
 
                   {message.sources.length > 0 && (
                     <div className="mt-3 space-y-2">
-                      <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] text-ink-400">
+                      <p className="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">
                         Sources · {message.sources.length}
                       </p>
                       {message.sources.map((source) => (
                         <div
                           key={source.chunkId}
-                          className="rounded-xl border border-slate-100 bg-slate-50/70 p-2.5"
+                          className="rounded-xl border border-[#f0f0f0] bg-parchment p-2.5"
                         >
                           <div className="flex flex-wrap items-center gap-2">
                             <Badge variant="violet" size="sm">
@@ -345,7 +345,7 @@ export function AskPanel({
 
           {sending && (
             <div className="flex justify-start">
-              <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 text-[11.5px] text-ink-500 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-2xl border border-hairline bg-white px-4 py-3 text-[11.5px] text-ink-500">
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-violet-500" />
                 Retrieving passages and checking grounding…
               </div>
@@ -354,7 +354,7 @@ export function AskPanel({
           <div ref={endRef} />
         </div>
 
-        <div className="border-t border-slate-100 bg-white p-3.5 sm:p-4">
+        <div className="border-t border-[#f0f0f0] bg-white p-3.5 sm:p-4">
           {suggestions.length > 0 && messages.length > 0 && (
             <div className="no-scrollbar mb-2.5 flex gap-2 overflow-x-auto">
               {suggestions.slice(0, 3).map((suggestion) => (
@@ -363,7 +363,7 @@ export function AskPanel({
                   type="button"
                   onClick={() => ask(suggestion)}
                   disabled={!canAsk || sending}
-                  className="shrink-0 rounded-full border border-slate-200 px-2.5 py-1 text-[10px] font-medium text-ink-500 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="shrink-0 rounded-full border border-hairline px-2.5 py-1 text-[10px] font-medium text-ink-500 transition hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {suggestion}
                 </button>

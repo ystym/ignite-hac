@@ -16,6 +16,7 @@ import {
   ListChecks,
   NotebookPen,
   Plus,
+  Search,
   ShieldCheck,
   Sparkles,
   Target,
@@ -116,6 +117,36 @@ export default async function DashboardPage() {
         }
       />
 
+      <form
+        action="/search"
+        method="get"
+        className="mb-5 rounded-2xl border border-hairline bg-white p-3"
+      >
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="relative min-w-0 flex-1">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
+            <input
+              type="search"
+              name="q"
+              maxLength={180}
+              placeholder="Search documents, notes, passages, quizzes and plans…"
+              aria-label="Search your study material"
+              className="h-11 w-full rounded-xl border border-white bg-white/95 pl-10 pr-3 text-[13px] text-ink-900 outline-none transition placeholder:text-ink-300 focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <Button type="submit" variant="violet" size="md" className="flex-1 sm:flex-none">
+              <Search className="h-4 w-4" /> Search
+            </Button>
+            <Button asChild variant="outline" size="md" className="flex-1 sm:flex-none">
+              <Link href="/learn">
+                <Sparkles className="h-4 w-4" /> Learn a topic
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </form>
+
       {isEmpty ? (
         <div className="space-y-5">
           <EmptyState
@@ -144,7 +175,7 @@ export default async function DashboardPage() {
             ].map((item) => (
               <Card key={item.title} className="p-5">
                 <item.icon className="h-5 w-5 text-violet-600" />
-                <h3 className="mt-4 text-sm font-bold text-ink-900">{item.title}</h3>
+                <h3 className="mt-4 text-sm font-semibold text-ink-900">{item.title}</h3>
                 <p className="mt-1.5 text-[12.5px] leading-6 text-ink-500">{item.body}</p>
               </Card>
             ))}
@@ -156,10 +187,10 @@ export default async function DashboardPage() {
             <Card className="relative overflow-hidden p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">
                     Study documents
                   </p>
-                  <p className="mt-3 font-display text-4xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="mt-3 font-display text-4xl font-semibold tracking-[-0.05em] text-ink-950">
                     {documents}
                   </p>
                 </div>
@@ -175,10 +206,10 @@ export default async function DashboardPage() {
             <Card className="relative overflow-hidden p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">
                     Notes generated
                   </p>
-                  <p className="mt-3 font-display text-4xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="mt-3 font-display text-4xl font-semibold tracking-[-0.05em] text-ink-950">
                     {noteCount}
                   </p>
                 </div>
@@ -194,10 +225,10 @@ export default async function DashboardPage() {
             <Card className="relative overflow-hidden p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">
                     Quizzes completed
                   </p>
-                  <p className="mt-3 font-display text-4xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="mt-3 font-display text-4xl font-semibold tracking-[-0.05em] text-ink-950">
                     {attempts}
                   </p>
                 </div>
@@ -215,10 +246,10 @@ export default async function DashboardPage() {
             <Card className="relative overflow-hidden p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">
                     Plan progress
                   </p>
-                  <p className="mt-3 font-display text-4xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="mt-3 font-display text-4xl font-semibold tracking-[-0.05em] text-ink-950">
                     {allTasks.length > 0 ? percent(planProgress / 100) : "—"}
                   </p>
                 </div>
@@ -236,18 +267,18 @@ export default async function DashboardPage() {
           </section>
 
           <div className="mt-6 grid gap-6 xl:grid-cols-[1.55fr_1fr]">
-            <div className="space-y-6">
-              <section>
-                <div className="mb-3.5 flex items-end justify-between">
+            <div className="min-w-0 space-y-6">
+              <section className="min-w-0">
+                <div className="mb-3.5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
                   <div>
-                    <h2 className="font-display text-lg font-bold text-ink-900">Recent material</h2>
+                    <h2 className="font-display text-lg font-semibold text-ink-900">Recent material</h2>
                     <p className="mt-0.5 text-[12px] text-ink-400">
                       Extraction, notes and indexes for your latest uploads.
                     </p>
                   </div>
                   <Link
                     href="/library"
-                    className="inline-flex items-center gap-1 text-[12px] font-bold text-violet-700 hover:text-violet-900"
+                    className="inline-flex items-center gap-1 text-[12px] font-semibold text-violet-700 hover:text-violet-900"
                   >
                     View library <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
@@ -265,13 +296,13 @@ export default async function DashboardPage() {
                       <Link
                         key={doc.id}
                         href={`/documents/${doc.id}`}
-                        className="group block rounded-2xl border border-slate-200/80 bg-white p-4 shadow-card transition hover:border-violet-200 hover:shadow-lift sm:p-5"
+                        className="group block min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white p-4 transition hover:border-violet-200 sm:p-5"
                       >
                         <div className="flex items-start gap-3.5">
                           <FileTypeIcon type={doc.fileType} className="h-11 w-11" />
                           <div className="min-w-0 flex-1">
                             <div className="flex flex-wrap items-center gap-2">
-                              <h3 className="truncate text-[14px] font-bold text-ink-900 group-hover:text-violet-800">
+                              <h3 className="truncate text-[14px] font-semibold text-ink-900 group-hover:text-violet-800">
                                 {doc.title}
                               </h3>
                               <Badge variant={statusPill.variant}>{statusPill.label}</Badge>
@@ -301,10 +332,10 @@ export default async function DashboardPage() {
                 </div>
               </section>
 
-              <section className="rounded-2xl border border-slate-200/80 bg-white shadow-card">
-                <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-                  <div>
-                    <h2 className="font-display text-[16px] font-bold text-ink-900">Recent quiz attempts</h2>
+              <section className="rounded-2xl border border-hairline bg-white">
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#f0f0f0] px-5 py-4">
+                  <div className="min-w-0">
+                    <h2 className="font-display text-[16px] font-semibold text-ink-900">Recent quiz attempts</h2>
                     <p className="mt-0.5 text-[11.5px] text-ink-400">Scores are calculated on the server and persisted.</p>
                   </div>
                   <Button asChild variant="ghost" size="sm">
@@ -319,13 +350,13 @@ export default async function DashboardPage() {
                     </p>
                   </div>
                 ) : (
-                  <div className="divide-y divide-slate-100">
+                  <div className="divide-y divide-[#f0f0f0]">
                     {recentAttempts.map((attempt) => {
                       const ratio = attempt.total > 0 ? attempt.score / attempt.total : 0;
                       return (
                         <div key={attempt.id} className="flex items-center gap-4 px-5 py-3.5">
                           <span
-                            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[11px] font-extrabold ${
+                            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold ${
                               ratio >= 0.75
                                 ? "bg-emerald-50 text-emerald-700"
                                 : ratio >= 0.5
@@ -352,13 +383,13 @@ export default async function DashboardPage() {
               </section>
             </div>
 
-            <aside className="space-y-5">
+            <aside className="min-w-0 space-y-5">
               <Card className="overflow-hidden">
                 <div className="bg-ink-950 p-5 text-white">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-violet-300">Focus today</p>
-                      <h2 className="mt-2 font-display text-[18px] font-bold leading-tight">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-300">Focus today</p>
+                      <h2 className="mt-2 font-display text-[18px] font-semibold leading-tight">
                         {focusDay ? focusDay.focus : "Build a study plan"}
                       </h2>
                     </div>
@@ -417,7 +448,7 @@ export default async function DashboardPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4 w-4 text-violet-600" />
-                    <h2 className="text-[13px] font-bold text-ink-900">Transparency snapshot</h2>
+                    <h2 className="text-[13px] font-semibold text-ink-900">Transparency snapshot</h2>
                   </div>
                   <Badge variant={ai.mode === "live" ? "green" : "amber"}>
                     {ai.mode === "live" ? "Live" : "Demo"}
@@ -434,14 +465,14 @@ export default async function DashboardPage() {
                     <p className="text-[12px] text-ink-400">No confidence data yet.</p>
                   )}
                 </div>
-                <div className="mt-4 rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+                <div className="mt-4 rounded-xl border border-[#f0f0f0] bg-parchment p-3">
                   <p className="text-[10.5px] leading-5 text-ink-400">
                     Confidence is the model&apos;s self-assessment, not a calibrated probability. Warnings stay visible after correction.
                   </p>
                 </div>
                 <Link
                   href="/reliability"
-                  className="mt-3 inline-flex items-center gap-1 text-[11.5px] font-bold text-violet-700 hover:text-violet-900"
+                  className="mt-3 inline-flex items-center gap-1 text-[11.5px] font-semibold text-violet-700 hover:text-violet-900"
                 >
                   See where it breaks <ArrowUpRight className="h-3 w-3" />
                 </Link>
@@ -450,16 +481,16 @@ export default async function DashboardPage() {
               <Card className="p-5">
                 <div className="flex items-center gap-2">
                   <CalendarCheck2 className="h-4 w-4 text-emerald-600" />
-                  <h2 className="text-[13px] font-bold text-ink-900">Quick actions</h2>
+                  <h2 className="text-[13px] font-semibold text-ink-900">Quick actions</h2>
                 </div>
                 <div className="mt-4 grid gap-2">
-                  <Link href="/upload" className="flex items-center gap-2.5 rounded-xl border border-slate-100 px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
+                  <Link href="/upload" className="flex items-center gap-2.5 rounded-xl border border-[#f0f0f0] px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
                     <UploadCloud className="h-4 w-4 text-violet-500" /> Upload new material
                   </Link>
-                  <Link href="/planner" className="flex items-center gap-2.5 rounded-xl border border-slate-100 px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
+                  <Link href="/planner" className="flex items-center gap-2.5 rounded-xl border border-[#f0f0f0] px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
                     <CalendarDays className="h-4 w-4 text-sky-500" /> Adjust study plan
                   </Link>
-                  <Link href="/quiz" className="flex items-center gap-2.5 rounded-xl border border-slate-100 px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
+                  <Link href="/quiz" className="flex items-center gap-2.5 rounded-xl border border-[#f0f0f0] px-3 py-2.5 text-[12px] font-semibold text-ink-600 transition hover:border-violet-200 hover:bg-violet-50/50 hover:text-violet-800">
                     <ListChecks className="h-4 w-4 text-emerald-500" /> Take a practice quiz
                   </Link>
                 </div>

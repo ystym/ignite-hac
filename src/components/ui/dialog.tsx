@@ -33,14 +33,14 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-1/2 top-1/2 z-50 grid max-h-[92dvh] w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-lift data-[state=open]:animate-scale-in sm:w-full",
+        "fixed left-1/2 top-1/2 z-50 grid max-h-[92dvh] w-[calc(100vw-2rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-2xl border border-hairline bg-white p-6 data-[state=open]:animate-scale-in sm:w-full",
         className,
       )}
       {...props}
     >
       {children}
       {!hideClose && (
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-lg p-1.5 text-ink-400 transition hover:bg-slate-100 hover:text-ink-800 focus:outline-none focus:ring-2 focus:ring-violet-400">
+        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-lg p-1.5 text-ink-400 transition hover:bg-[#e8e8ed] hover:text-ink-800 focus:outline-none focus:ring-2 focus:ring-violet-400">
           <X className="h-4 w-4" aria-hidden="true" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
@@ -60,7 +60,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("font-display text-xl font-bold text-ink-900", className)}
+    className={cn("font-display text-xl font-semibold text-ink-900", className)}
     {...props}
   />
 ));

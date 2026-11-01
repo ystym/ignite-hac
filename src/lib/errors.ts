@@ -69,9 +69,17 @@ export function toAppError(error: unknown): AppError {
   }
 
   if (lower.includes("quota") || lower.includes("rate limit") || lower.includes("429") || lower.includes("resource_exhausted")) {
+    const daily = /per day|daily/i.test(message);
+    const reset = message.match(/retry in ([0-9hms.]+)/i)?.[1];
+    const resetText = reset
+      ? ` It resets in about ${reset.replace(/\.$/, "")}.`
+      : daily
+        ? ""
+        : " Wait a minute, then retry.";
     return new AppError({
-      message:
-        "The AI provider is rate-limiting this workspace. Wait a minute, then retry. Nothing was silently substituted.",
+      message: daily
+        ? `The Gemini daily request limit for this model is used up.${resetText} Enable billing on the Google AI Studio project, switch GEMINI_MODEL, or try again after the reset. Nothing was silently substituted.`
+        : `The AI provider is rate-limiting this workspace.${resetText || " Wait a minute, then retry."} Nothing was silently substituted.`,
       code: "AI_RATE_LIMITED",
       status: 429,
       retryable: true,

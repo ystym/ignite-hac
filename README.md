@@ -46,6 +46,8 @@ It is built for the case where a study assistant must be useful **and honest**: 
 | **Grounded quizzes** | 3–10 MCQs generated from the extracted source, excerpt-checked before saving, scored on the server. Explanations and source excerpts unlock only after submission. |
 | **Study planner** | Day-by-day plan with study, revision, practice and buffer tasks. Live plans use Gemini; Demo Mode uses a deterministic local scheduler labelled **Non-AI**. |
 | **Cited Q&A** | Retrieval over persisted chunk embeddings, with page or audio-timestamp citations. Live answers that do not cite a retrieved passage are rejected; low-relevance questions get an explicit “I couldn't find this” answer. |
+| **Knowledge search** | One search page with two modes. **My material** runs a weighted lexical search across documents, notes, passages, quizzes and plans. **Web research** uses Gemini Google Search grounding and lists the actual source URLs returned by the provider. |
+| **Learn a topic** | Structured notes for a topic that is not in the uploaded material. Always labelled as external/general knowledge, never embedded, indexed, cited or used for grounded quizzes. |
 | **Manual correction** | Correct an extraction block, preserve the original warnings as an audit trail, mark the text as human-corrected, and rebuild the retrieval index. |
 | **Reliability lab** | A deliberately ambiguous calculus fixture. The correct behaviour is to admit the exponent is unreadable, not to produce a confident digit. Curated reference and real stores are kept separate. |
 | **Setup diagnostics** | Server-side configuration status, workspace counts, real Gemini connection test, environment reference, capability matrix and limits. |
@@ -79,6 +81,9 @@ This project deliberately avoids the common demo pattern where pre-written “AI
 | Quiz scoring | Server-side; attempts persist | Server-side; attempts persist |
 | Study planner | Gemini plan | Deterministic scheduler, labelled Non-AI |
 | Cited Q&A | Gemini embeddings + grounded generation | Local hashed-token retrieval over curated passages |
+| Knowledge search (my material) | Local lexical search over every workspace record | Local lexical search over the curated workspace |
+| Web research | Gemini Google Search grounding with real source URLs | **Blocked by design** — no fabricated web answers |
+| Learn a topic | Separate general-knowledge notes, labelled external | **Blocked by design** — no fabricated topic notes |
 | Manual correction + reindex | Available | Available (local demo vectors) |
 | Reliability live run | Real model output stored unchanged | Disabled; curated reference remains |
 | Connection test | Available | Disabled |
@@ -224,7 +229,7 @@ No API key is needed. Every sample below is labelled **Curated demo** or **DEMO*
 | --- | --- | --- |
 | `DATABASE_URL` | `file:../data/studymate.db` | SQLite path, resolved relative to `prisma/schema.prisma`. |
 | `GEMINI_API_KEY` | empty | Enables live AI. Server-side only. |
-| `GEMINI_MODEL` | `gemini-2.5-flash` | Vision, audio, notes, quizzes, plans and grounded answers. |
+| `GEMINI_MODEL` | `gemini-3-flash-preview` | Vision, audio, notes, quizzes, plans and grounded answers. |
 | `GEMINI_EMBEDDING_MODEL` | `gemini-embedding-001` | Embeddings for the persisted retrieval index. |
 | `GEMINI_EMBEDDING_DIMENSIONS` | `768` | 128–3072 supported. Changing it requires rebuilding every index. |
 | `FORCE_DEMO_MODE` | `false` | Keep curated Demo Mode even when a key exists. Useful for judging without spend. |
@@ -305,11 +310,13 @@ Live plans are schema-validated, date-bounded, capped at 60 days, and required t
 | `/` | Landing page: product story, sample inputs, workflow, limitations and demo entry point. |
 | `/dashboard` | Workspace overview: counts, recent material, plan progress, recent attempts and next actions. |
 | `/library` | Searchable/filterable document library with mode, status, confidence and index state. |
+| `/search` | Combined knowledge search: local material search and live web research, with filters, highlighted snippets and real source links. |
 | `/upload` | Drag/drop or choose images, PDFs and audio; typed-material tab; sample catalog; validation and real processing stages. |
 | `/documents/[id]` | Document workspace: Notes, Extracted, Practice, Ask + original source panel, correction, retry, reindex and delete. |
 | `/quiz` | Quiz index with mode, difficulty, attempts and average score (labelled as an attempt statistic, not an accuracy claim). |
 | `/quiz/[id]` | Intro, question runner, server-scored results, explanations, source excerpts, filters and retake. |
 | `/planner` | Plan creation, day-by-day schedule, task ticks, progress, regeneration and deletion. |
+| `/learn` | External topic notes with Simple English / Hinglish output, clearly separated from grounded material. |
 | `/reliability` | Fixed ambiguity fixture, pass criteria, curated reference, stored runs, live test and human correction. |
 | `/setup` | Server-side status, live connection test, workspace snapshot, env reference, capability matrix and limits. |
 
@@ -418,6 +425,9 @@ Cascade deletes are configured for document-owned notes, quizzes, chunks and mes
 | `GET/POST` | `/api/documents/[id]/quiz` | List quizzes or generate a grounded quiz. |
 | `GET/POST/DELETE` | `/api/documents/[id]/ask` | Conversation history, cited answer, or clear conversation. |
 | `POST` | `/api/documents/[id]/reindex` | Rebuild embeddings from corrected/stored chunks. |
+| `GET` | `/api/search` | Weighted local search across documents, notes, passages, quizzes and plans. |
+| `POST` | `/api/search/web` | Live Gemini Google Search research with extracted source URLs. |
+| `POST` | `/api/topics/notes` | External/general-knowledge topic notes; never persisted or indexed. |
 | `POST` | `/api/quizzes/[id]/attempts` | Server-score and persist an attempt. |
 | `GET/POST` | `/api/plans` | List or create plans. |
 | `GET/PATCH/DELETE` | `/api/plans/[id]` | Read, update progress, or delete a plan. |

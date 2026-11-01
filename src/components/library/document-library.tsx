@@ -89,7 +89,7 @@ export function DocumentLibrary({
 
   return (
     <div>
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-card">
+      <div className="rounded-2xl border border-hairline bg-white p-3">
         <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center">
           <div className="relative min-w-0 flex-1">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-300" />
@@ -97,11 +97,11 @@ export function DocumentLibrary({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search by title, filename or extraction method…"
-              className="border-transparent bg-slate-50/80 pl-10 shadow-none focus:bg-white"
+              className="border-transparent bg-parchment pl-10 shadow-none focus:bg-white"
               aria-label="Search documents"
             />
           </div>
-          <div className="grid grid-cols-3 gap-2 lg:flex">
+          <div className="grid grid-cols-1 gap-2 min-[420px]:grid-cols-3 lg:flex">
             <Select value={type} onChange={(event) => setType(event.target.value)} className="min-w-0 lg:w-[132px]" aria-label="Filter by type">
               <option value="all">All types</option>
               <option value="image">Images</option>
@@ -124,13 +124,13 @@ export function DocumentLibrary({
         </div>
         <div className="mt-2.5 flex items-center justify-between px-1">
           <p className="text-[11px] text-ink-400">
-            Showing <span className="font-bold text-ink-600">{filtered.length}</span> of {documents.length} documents
+            Showing <span className="font-semibold text-ink-600">{filtered.length}</span> of {documents.length} documents
           </p>
           {hasFilters && (
             <button
               type="button"
               onClick={reset}
-              className="inline-flex items-center gap-1 text-[11px] font-bold text-violet-700 hover:text-violet-900"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-violet-700 hover:text-violet-900"
             >
               <X className="h-3 w-3" /> Clear filters
             </button>
@@ -147,7 +147,7 @@ export function DocumentLibrary({
           className="mt-5"
         />
       ) : (
-        <div className="mt-5 grid gap-4 xl:grid-cols-2">
+        <div className="mt-5 grid min-w-0 gap-4 xl:grid-cols-2">
           {filtered.map((doc) => {
             const statusVariant =
               doc.status === "READY" ? "green" : doc.status === "FAILED" ? "rose" : "amber";
@@ -155,7 +155,7 @@ export function DocumentLibrary({
               <Link
                 key={doc.id}
                 href={`/documents/${doc.id}`}
-                className="group card-lift rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card"
+                className="group card-lift min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white p-5"
               >
                 <div className="flex items-start gap-4">
                   <FileTypeIcon type={doc.fileType} className="h-12 w-12" />
@@ -171,7 +171,7 @@ export function DocumentLibrary({
                         </Badge>
                       )}
                     </div>
-                    <h3 className="mt-2 truncate font-display text-[16px] font-bold text-ink-900 transition group-hover:text-violet-800">
+                    <h3 className="mt-2 truncate font-display text-[16px] font-semibold text-ink-900 transition group-hover:text-violet-800">
                       {doc.title}
                     </h3>
                     <p className="mt-0.5 truncate text-[11.5px] text-ink-400">

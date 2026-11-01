@@ -95,6 +95,17 @@ export const notesSchema = z.object({
 });
 export type NotesContent = z.infer<typeof notesSchema>;
 
+/**
+ * Optional "learn a topic" notes. They are general knowledge, not grounded in
+ * an uploaded document, so they carry their own scope disclaimer and are never
+ * stored as a document note, indexed for RAG or used to build grounded quizzes.
+ */
+export const topicNotesSchema = notesSchema.extend({
+  scopeNote: z.string().min(1).max(600),
+  prerequisites: z.array(z.string().min(1).max(300)).max(12).default([]),
+});
+export type TopicNotesContent = z.infer<typeof topicNotesSchema>;
+
 /* -------------------------------------------------------------------------- */
 /* Quiz                                                                       */
 /* -------------------------------------------------------------------------- */

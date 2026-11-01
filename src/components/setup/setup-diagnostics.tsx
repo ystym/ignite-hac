@@ -161,8 +161,8 @@ export function SetupDiagnostics({
 
   return (
     <div className="grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(290px,0.65fr)]">
-      <section className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-[linear-gradient(135deg,#F8F5FF,#FFFFFF)] px-5 py-4">
+      <section className="overflow-hidden rounded-2xl border border-hairline bg-white">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#f0f0f0] bg-parchment px-5 py-4">
           <div className="flex items-center gap-3">
             <span
               className={cn(
@@ -173,7 +173,7 @@ export function SetupDiagnostics({
               <ServerCog className="h-[18px] w-[18px]" />
             </span>
             <div>
-              <h2 className="font-display text-[16px] font-bold text-ink-900">Connection diagnostics</h2>
+              <h2 className="font-display text-[16px] font-semibold text-ink-900">Connection diagnostics</h2>
               <p className="text-[10.5px] text-ink-400">
                 Configuration is checked on the server. Nothing is inferred from the user interface.
               </p>
@@ -182,7 +182,7 @@ export function SetupDiagnostics({
           <ModeBadge mode={ai.configured ? "LIVE" : "DEMO"} />
         </div>
 
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-[#f0f0f0]">
           {checks.map((check) => (
             <div key={check.label} className="flex items-start gap-3 px-5 py-3">
               <span
@@ -195,7 +195,7 @@ export function SetupDiagnostics({
               </span>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                  <p className="text-[11.5px] font-bold text-ink-800">{check.label}</p>
+                  <p className="text-[11.5px] font-semibold text-ink-800">{check.label}</p>
                   <span className="font-mono text-[10px] text-ink-500">{check.value}</span>
                 </div>
                 <p className="mt-0.5 text-[10.5px] leading-4 text-ink-400">{check.detail}</p>
@@ -209,7 +209,7 @@ export function SetupDiagnostics({
           ))}
         </div>
 
-        <div className="border-t border-slate-100 bg-slate-50/60 p-5">
+        <div className="border-t border-[#f0f0f0] bg-parchment/60 p-5">
           <div className="flex flex-wrap items-center gap-2">
             <Button
               type="button"
@@ -265,7 +265,7 @@ export function SetupDiagnostics({
                 <div className="min-w-0 flex-1">
                   <p
                     className={cn(
-                      "text-[11.5px] font-bold",
+                      "text-[11.5px] font-semibold",
                       test.ok ? "text-emerald-900" : "text-rose-900",
                     )}
                   >
@@ -298,9 +298,9 @@ export function SetupDiagnostics({
         </div>
       </section>
 
-      <section className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card">
+      <section className="rounded-2xl border border-hairline bg-white p-5">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-display text-[16px] font-bold text-ink-900">Workspace right now</h2>
+          <h2 className="font-display text-[16px] font-semibold text-ink-900">Workspace right now</h2>
           <Badge variant="default">SQLite</Badge>
         </div>
         <p className="mt-1 text-[10.5px] leading-4 text-ink-400">
@@ -314,8 +314,8 @@ export function SetupDiagnostics({
             { label: "Notes stored", value: workspace.notes },
             { label: "Quiz attempts", value: workspace.quizAttempts },
           ].map((item) => (
-            <div key={item.label} className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
-              <p className="font-display text-xl font-extrabold tracking-[-0.04em] text-ink-950">
+            <div key={item.label} className="rounded-xl border border-[#f0f0f0] bg-parchment p-3">
+              <p className="font-display text-xl font-semibold tracking-[-0.04em] text-ink-950">
                 {item.value}
               </p>
               <p className="mt-0.5 text-[9.5px] font-medium uppercase tracking-wider text-ink-400">
@@ -325,7 +325,7 @@ export function SetupDiagnostics({
           ))}
         </div>
 
-        <div className="mt-4 space-y-1.5 border-t border-slate-100 pt-3 text-[10.5px] leading-5 text-ink-400">
+        <div className="mt-4 space-y-1.5 border-t border-[#f0f0f0] pt-3 text-[10.5px] leading-5 text-ink-400">
           <p>
             {workspace.liveDocuments === 0
               ? "No live documents yet. Every stored document is a curated sample."

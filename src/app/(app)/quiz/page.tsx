@@ -104,8 +104,8 @@ export default async function QuizIndexPage() {
             <Card className="p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">Quizzes available</p>
-                  <p className="mt-2.5 font-display text-3xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">Quizzes available</p>
+                  <p className="mt-2.5 font-display text-3xl font-semibold tracking-[-0.05em] text-ink-950">
                     {quizzes.length}
                   </p>
                 </div>
@@ -121,8 +121,8 @@ export default async function QuizIndexPage() {
             <Card className="p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">Attempts recorded</p>
-                  <p className="mt-2.5 font-display text-3xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">Attempts recorded</p>
+                  <p className="mt-2.5 font-display text-3xl font-semibold tracking-[-0.05em] text-ink-950">
                     {totalAttempts}
                   </p>
                 </div>
@@ -137,8 +137,8 @@ export default async function QuizIndexPage() {
             <Card className="p-5">
               <div className="flex items-start justify-between">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.13em] text-ink-400">Average score</p>
-                  <p className="mt-2.5 font-display text-3xl font-extrabold tracking-[-0.05em] text-ink-950">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.13em] text-ink-400">Average score</p>
+                  <p className="mt-2.5 font-display text-3xl font-semibold tracking-[-0.05em] text-ink-950">
                     {average == null ? "—" : percent(average)}
                   </p>
                 </div>
@@ -164,7 +164,7 @@ export default async function QuizIndexPage() {
               return (
                 <article
                   key={quiz.id}
-                  className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card sm:p-6"
+                  className="min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white p-5 sm:p-6"
                 >
                   <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex min-w-0 items-start gap-3.5">
@@ -172,7 +172,7 @@ export default async function QuizIndexPage() {
                         type={quiz.document.fileType}
                         className="h-12 w-12 rounded-xl"
                       />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <Badge
                             variant={
@@ -193,10 +193,10 @@ export default async function QuizIndexPage() {
                           </span>
                           <ConfidenceBadge score={quiz.document.overallConfidence} className="text-[9px]" />
                         </div>
-                        <h2 className="mt-2 font-display text-[17px] font-bold leading-snug text-ink-900">
+                        <h2 className="mt-2 break-words font-display text-[17px] font-semibold leading-snug text-ink-900">
                           {quiz.title}
                         </h2>
-                        <p className="mt-1 truncate text-[11px] text-ink-400">
+                        <p className="mt-1 break-words text-[11px] leading-5 text-ink-400">
                           From{" "}
                           <Link
                             href={`/documents/${quiz.document.id}`}
@@ -210,13 +210,13 @@ export default async function QuizIndexPage() {
                     </div>
 
                     <div className="flex flex-shrink-0 flex-col gap-2 sm:flex-row sm:items-center">
-                      <div className="rounded-xl bg-slate-50 px-4 py-2.5 sm:min-w-[190px]">
+                      <div className="rounded-xl bg-parchment px-4 py-2.5 sm:min-w-[190px]">
                         {best ? (
                           <>
-                            <p className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                            <p className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-amber-700">
                               <Trophy className="h-3 w-3" /> Best attempt
                             </p>
-                            <p className="mt-0.5 text-[13px] font-extrabold text-ink-900">
+                            <p className="mt-0.5 text-[13px] font-semibold text-ink-900">
                               {best.score}/{best.total} · {percent(best.score / best.total)}
                             </p>
                             <p className="text-[9.5px] text-ink-400">
@@ -226,7 +226,7 @@ export default async function QuizIndexPage() {
                           </>
                         ) : (
                           <>
-                            <p className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-violet-600">
+                            <p className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-violet-600">
                               <Sparkles className="h-3 w-3" /> Not attempted
                             </p>
                             <p className="mt-0.5 text-[12px] font-semibold text-ink-700">

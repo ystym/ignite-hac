@@ -33,19 +33,19 @@ export function SourcePanel({
 
   return (
     <div className="space-y-5">
-      <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-        <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3.5">
+      <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+        <div className="flex items-center justify-between border-b border-[#f0f0f0] px-4 py-3.5">
           <div className="flex items-center gap-2">
             <FileTypeIcon type={document.fileType} className="h-8 w-8 rounded-lg" iconClassName="h-4 w-4" />
             <div>
-              <p className="text-[12px] font-bold text-ink-900">Original source</p>
+              <p className="text-[12px] font-semibold text-ink-900">Original source</p>
               <p className="text-[10px] text-ink-400">{document.fileName}</p>
             </div>
           </div>
           <ModeBadge mode={document.mode} />
         </div>
 
-        <div className="bg-[linear-gradient(145deg,#F5F4FA,#ECEBF4)] p-3">
+        <div className="bg-parchment p-3">
           {document.fileType === "image" ? (
             // Arbitrary user uploads are served from a private API route, so a
             // plain img is intentional here. The source is never rewritten.
@@ -53,10 +53,10 @@ export function SourcePanel({
             <img
               src={fileUrl}
               alt={`Original uploaded material: ${document.title}`}
-              className="max-h-[430px] w-full rounded-xl border border-white/80 bg-white object-contain shadow-sm"
+              className="max-h-[430px] w-full rounded-xl border border-white/80 bg-white object-contain"
             />
           ) : document.fileType === "pdf" ? (
-            <div className="overflow-hidden rounded-xl border border-white/80 bg-white shadow-sm">
+            <div className="overflow-hidden rounded-xl border border-white/80 bg-white">
               <iframe
                 src={`${fileUrl}#page=1`}
                 title={`PDF preview: ${document.title}`}
@@ -64,16 +64,16 @@ export function SourcePanel({
               />
             </div>
           ) : document.fileType === "audio" ? (
-            <div className="rounded-xl border border-white/80 bg-white p-4 shadow-sm">
+            <div className="rounded-xl border border-white/80 bg-white p-4">
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-700">
+                <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-amber-700">
                   <AudioLines className="h-3.5 w-3.5" /> Recorded lecture
                 </span>
                 <span className="font-mono text-[10px] text-ink-400">
                   {duration > 0 ? formatSeconds(duration) : "Audio"}
                 </span>
               </div>
-              <div className="mt-4 flex h-20 items-center justify-center gap-[3px] overflow-hidden rounded-lg bg-[linear-gradient(145deg,#FFF8EB,#F4EDFF)] px-4">
+              <div className="mt-4 flex h-20 items-center justify-center gap-[3px] overflow-hidden rounded-lg bg-parchment px-4">
                 {Array.from({ length: 48 }).map((_, index) => (
                   <span
                     key={index}
@@ -90,8 +90,8 @@ export function SourcePanel({
               </p>
             </div>
           ) : (
-            <div className="max-h-[430px] overflow-y-auto rounded-xl border border-white/80 bg-white p-4 shadow-sm">
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.12em] text-ink-300">
+            <div className="max-h-[430px] overflow-y-auto rounded-xl border border-white/80 bg-white p-4">
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-ink-300">
                 Stored typed source
               </p>
               <pre className="whitespace-pre-wrap break-words font-mono text-[11px] leading-5 text-ink-600">
@@ -101,7 +101,7 @@ export function SourcePanel({
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-3 border-t border-slate-100 px-4 py-3">
+        <div className="flex items-center justify-between gap-3 border-t border-[#f0f0f0] px-4 py-3">
           <p className="text-[10px] leading-4 text-ink-400">
             This is the file the AI actually read.
           </p>
@@ -109,17 +109,17 @@ export function SourcePanel({
             href={fileUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex shrink-0 items-center gap-1 text-[11px] font-bold text-violet-700 hover:text-violet-900"
+            className="inline-flex shrink-0 items-center gap-1 text-[11px] font-semibold text-violet-700 hover:text-violet-900"
           >
             Open <ExternalLink className="h-3 w-3" />
           </a>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-card">
+      <div className="rounded-2xl border border-hairline bg-white p-4">
         <div className="flex items-center gap-2">
           <Fingerprint className="h-4 w-4 text-violet-600" />
-          <h2 className="text-[13px] font-bold text-ink-900">Source facts</h2>
+          <h2 className="text-[13px] font-semibold text-ink-900">Source facts</h2>
         </div>
         <dl className="mt-3.5 space-y-2.5 text-[11.5px]">
           <Fact label="Input type" value={fileTypeLabel(document.fileType)} icon={FileText} />
@@ -145,7 +145,7 @@ export function SourcePanel({
           <Fact label="Updated" value={<TimeAgo value={document.updatedAt} />} />
         </dl>
 
-        <div className="mt-4 border-t border-slate-100 pt-4">
+        <div className="mt-4 border-t border-[#f0f0f0] pt-4">
           <ConfidenceBar score={document.overallConfidence} />
           <p className="mt-2 text-[10px] leading-4 text-ink-400">
             Model-reported self-assessment, not a calibrated probability. Manual corrections are marked
@@ -154,11 +154,11 @@ export function SourcePanel({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-card">
+      <div className="rounded-2xl border border-hairline bg-white p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldAlert className="h-4 w-4 text-amber-600" />
-            <h2 className="text-[13px] font-bold text-ink-900">Uncertainty</h2>
+            <h2 className="text-[13px] font-semibold text-ink-900">Uncertainty</h2>
           </div>
           <Badge variant={document.warnings.length > 0 ? "amber" : "green"}>
             {document.warnings.length} warning{document.warnings.length === 1 ? "" : "s"}
@@ -188,7 +188,7 @@ export function SourcePanel({
               <button
                 type="button"
                 onClick={onShowExtraction}
-                className="text-[10.5px] font-bold text-violet-700 hover:text-violet-900"
+                className="text-[10.5px] font-semibold text-violet-700 hover:text-violet-900"
               >
                 View all {document.warnings.length} warnings
               </button>
@@ -206,7 +206,7 @@ export function SourcePanel({
       <div className="rounded-2xl border border-violet-100 bg-violet-50/50 p-4">
         <div className="flex items-center gap-2">
           <Layers3 className="h-4 w-4 text-violet-600" />
-          <h2 className="text-[12px] font-bold text-ink-900">What is what</h2>
+          <h2 className="text-[12px] font-semibold text-ink-900">What is what</h2>
         </div>
         <div className="mt-3 space-y-2.5">
           <div className="flex items-center gap-2">

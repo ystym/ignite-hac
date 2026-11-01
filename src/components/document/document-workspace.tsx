@@ -182,7 +182,7 @@ export function DocumentWorkspace({
               <ModeBadge mode={document.mode} />
               <ConfidenceBadge score={document.overallConfidence} />
             </div>
-            <h1 className="mt-2 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-extrabold leading-[1.14] tracking-[-0.035em] text-ink-950">
+            <h1 className="mt-2 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-semibold leading-[1.14] tracking-[-0.035em] text-ink-950">
               {document.title}
             </h1>
             <p className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11.5px] text-ink-400">
@@ -272,7 +272,7 @@ export function DocumentWorkspace({
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.62fr)_minmax(310px,0.78fr)]">
         <div className="min-w-0">
           <Tabs value={tab} onValueChange={setTab}>
-            <TabsList className="w-full justify-start">
+            <TabsList className="w-full flex-wrap justify-start">
               <TabsTrigger value="notes">
                 <NotebookPen className="h-4 w-4" /> Notes
                 {note ? <Count value={note.content.sections.length} /> : null}
@@ -332,7 +332,7 @@ export function DocumentWorkspace({
               <div className="flex items-start gap-2.5">
                 <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
                 <div>
-                  <p className="text-[12px] font-bold text-amber-900">The search index needs attention</p>
+                  <p className="text-[12px] font-semibold text-amber-900">The search index needs attention</p>
                   <p className="text-[11px] leading-5 text-amber-800/80">
                     {document.indexStatus === "STALE"
                       ? "A correction changed the extracted source. Rebuild the index so Ask uses the fixed text."
@@ -392,7 +392,7 @@ export function DocumentWorkspace({
 
 function Count({ value }: { value: number }) {
   return (
-    <span className="rounded-full bg-slate-100 px-1.5 py-0.5 font-mono text-[9px] font-bold text-ink-400">
+    <span className="rounded-full bg-[#e8e8ed] px-1.5 py-0.5 font-mono text-[9px] font-semibold text-ink-400">
       {value}
     </span>
   );

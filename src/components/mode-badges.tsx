@@ -55,7 +55,7 @@ export function ConfidenceBar({
         </span>
       </div>
       <div
-        className="h-1.5 overflow-hidden rounded-full bg-slate-100"
+        className="h-1.5 overflow-hidden rounded-full bg-[#e8e8ed]"
         title="Model-reported confidence, not a calibrated probability."
       >
         <div

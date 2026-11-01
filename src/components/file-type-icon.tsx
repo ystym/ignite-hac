@@ -28,7 +28,7 @@ export function FileTypeIcon({
   return (
     <span
       className={cn(
-        "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-ink-500",
+        "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-hairline bg-parchment text-ink-500",
         className,
       )}
     >

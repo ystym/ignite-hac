@@ -174,22 +174,22 @@ export function ReliabilityLab({
         }
       />
 
-      <div className="grid gap-5 lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3.5">
+      <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+        <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+          <div className="flex items-center justify-between border-b border-[#f0f0f0] px-5 py-3.5">
             <div className="flex items-center gap-2">
               <ImageIcon className="h-4 w-4 text-violet-600" />
-              <h2 className="text-[13px] font-bold text-ink-900">The ambiguous fixture</h2>
+              <h2 className="text-[13px] font-semibold text-ink-900">The ambiguous fixture</h2>
             </div>
             <Badge variant="amber">Fixed test input</Badge>
           </div>
-          <div className="bg-[linear-gradient(145deg,#F5F4FA,#ECEBF4)] p-4">
+          <div className="bg-parchment p-4">
             {/* Static fixture served from public/samples. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/samples/ambiguous-handwriting.png"
               alt="Handwritten calculus practice with a deliberately smudged exponent in question 7"
-              className="w-full rounded-xl border border-white/80 bg-white object-contain shadow-sm"
+              className="w-full rounded-xl border border-white/80 bg-white object-contain"
             />
           </div>
           <div className="space-y-3 p-5">
@@ -215,11 +215,11 @@ export function ReliabilityLab({
           </div>
         </div>
 
-        <div className="flex flex-col gap-5">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card sm:p-6">
+        <div className="flex min-w-0 flex-col gap-5">
+          <div className="rounded-2xl border border-hairline bg-white p-5 sm:p-6">
             <div className="flex items-center gap-2">
               <FlaskConical className="h-[18px] w-[18px] text-violet-600" />
-              <h2 className="font-display text-[17px] font-bold text-ink-900">Run the live experiment</h2>
+              <h2 className="font-display text-[17px] font-semibold text-ink-900">Run the live experiment</h2>
             </div>
             <p className="mt-2 text-[12px] leading-6 text-ink-500">
               The button sends this exact image to Gemini with the production extraction prompt. The
@@ -228,8 +228,8 @@ export function ReliabilityLab({
             </p>
 
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">AI status</p>
+              <div className="rounded-xl border border-[#f0f0f0] bg-parchment p-3">
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-ink-400">AI status</p>
                 <div className="mt-1 flex items-center gap-1.5">
                   <span
                     className={cn(
@@ -237,7 +237,7 @@ export function ReliabilityLab({
                       aiConfigured ? "animate-pulse-soft bg-emerald-500" : "bg-amber-500",
                     )}
                   />
-                  <p className="text-[11px] font-bold text-ink-800">
+                  <p className="text-[11px] font-semibold text-ink-800">
                     {aiConfigured ? "Live AI configured" : "Demo mode"}
                   </p>
                 </div>
@@ -245,9 +245,9 @@ export function ReliabilityLab({
                   {aiConfigured ? configuredModel : "no API key"}
                 </p>
               </div>
-              <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
-                <p className="text-[9px] font-bold uppercase tracking-wider text-ink-400">Stored runs</p>
-                <p className="mt-1 font-display text-lg font-extrabold text-ink-900">{runs.length}</p>
+              <div className="rounded-xl border border-[#f0f0f0] bg-parchment p-3">
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-ink-400">Stored runs</p>
+                <p className="mt-1 font-display text-lg font-semibold text-ink-900">{runs.length}</p>
                 <p className="text-[9px] text-ink-400">Live and seeded runs combined</p>
               </div>
             </div>
@@ -284,7 +284,7 @@ export function ReliabilityLab({
           </div>
 
           <div className="rounded-2xl border border-violet-100 bg-violet-50/50 p-5">
-            <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-violet-700">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-violet-700">
               What counts as a pass?
             </p>
             <ul className="mt-2.5 space-y-2">
@@ -311,7 +311,7 @@ export function ReliabilityLab({
       <section className="mt-8">
         <div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
           <div>
-            <h2 className="font-display text-xl font-bold text-ink-900">Inspect the reports</h2>
+            <h2 className="font-display text-xl font-semibold text-ink-900">Inspect the reports</h2>
             <p className="mt-0.5 text-[11.5px] text-ink-400">
               The curated reference is always available. Stored runs appear after a live test or the
               curated demo seed.
@@ -339,12 +339,12 @@ export function ReliabilityLab({
                 className={cn(
                   "shrink-0 rounded-xl border px-3.5 py-2 text-left transition",
                   selected
-                    ? "border-violet-300 bg-violet-50 shadow-sm"
-                    : "border-slate-200 bg-white hover:border-slate-300",
+                    ? "border-violet-300 bg-violet-50"
+                    : "border-hairline bg-white hover:border-slate-300",
                 )}
                 aria-pressed={selected}
               >
-                <p className={cn("text-[11px] font-bold", selected ? "text-violet-900" : "text-ink-700")}>
+                <p className={cn("text-[11px] font-semibold", selected ? "text-violet-900" : "text-ink-700")}>
                   {entry.kind === "curated"
                     ? "Curated reference"
                     : entry.mode === "LIVE"
@@ -371,23 +371,23 @@ export function ReliabilityLab({
       </section>
 
       {runs.length > 0 && (
-        <section className="mt-6 rounded-2xl border border-slate-200/80 bg-white shadow-card">
-          <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+        <section className="mt-6 rounded-2xl border border-hairline bg-white">
+          <div className="flex items-center justify-between border-b border-[#f0f0f0] px-5 py-4">
             <div>
-              <h2 className="font-display text-[15px] font-bold text-ink-900">Run history</h2>
+              <h2 className="font-display text-[15px] font-semibold text-ink-900">Run history</h2>
               <p className="mt-0.5 text-[10.5px] text-ink-400">
                 Real stored outputs, kept separate from the authored reference.
               </p>
             </div>
             <Badge variant="default">{runs.length} run{runs.length === 1 ? "" : "s"}</Badge>
           </div>
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-[#f0f0f0]">
             {runs.map((run) => (
               <button
                 key={run.id}
                 type="button"
                 onClick={() => setActiveKey(`run:${run.id}`)}
-                className="flex w-full items-center gap-3 px-5 py-3 text-left transition hover:bg-slate-50/70"
+                className="flex w-full items-center gap-2 px-4 py-3 text-left transition hover:bg-parchment sm:gap-3 sm:px-5"
               >
                 <ModeBadge mode={run.mode} />
                 <div className="min-w-0 flex-1">
@@ -400,9 +400,9 @@ export function ReliabilityLab({
                 </div>
                 <ConfidenceBadge score={run.result.overallConfidence} showValue={false} className="text-[9px]" />
                 {run.humanCorrection ? (
-                  <Badge variant="green" size="sm">Corrected</Badge>
+                  <Badge variant="green" size="sm" className="hidden sm:inline-flex">Corrected</Badge>
                 ) : (
-                  <Badge variant="default" size="sm">Unreviewed</Badge>
+                  <Badge variant="default" size="sm" className="hidden sm:inline-flex">Unreviewed</Badge>
                 )}
                 <ArrowRight className="h-3.5 w-3.5 shrink-0 text-ink-300" />
               </button>
@@ -411,7 +411,7 @@ export function ReliabilityLab({
         </section>
       )}
 
-      <div className="mt-6 flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 sm:flex-row sm:items-center">
+      <div className="mt-6 flex flex-col items-start justify-between gap-3 rounded-2xl border border-hairline bg-white p-4 sm:flex-row sm:items-center">
         <div className="flex items-start gap-2.5">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-ink-300" />
           <p className="text-[10.5px] leading-5 text-ink-400">
@@ -472,8 +472,8 @@ function ReportView({
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-      <div className="border-b border-slate-100 bg-[linear-gradient(135deg,#F8F5FF,#FFFFFF)] p-5 sm:p-6">
+    <div className="overflow-hidden rounded-2xl border border-hairline bg-white">
+      <div className="border-b border-[#f0f0f0] bg-parchment p-5 sm:p-6">
         <div className="flex flex-wrap items-center gap-2">
           {entry.kind === "curated" ? (
             <Badge variant="amber" title="Authored sample output, not produced by a live model run.">
@@ -495,7 +495,7 @@ function ReportView({
             </Badge>
           )}
         </div>
-        <h2 className="mt-3 font-display text-[20px] font-extrabold tracking-[-0.025em] text-ink-950">
+        <h2 className="mt-3 font-display text-[20px] font-semibold tracking-[-0.025em] text-ink-950">
           {result.title}
         </h2>
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] text-ink-400">
@@ -528,7 +528,7 @@ function ReportView({
                 : "border-sky-100 bg-sky-50/60",
             )}
           >
-            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.13em] text-ink-500">
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-ink-500">
               <Info className="h-3 w-3" /> Model note
             </p>
             <p className="mt-1 text-[11.5px] leading-5 text-ink-600">{result.modelNote}</p>
@@ -537,7 +537,7 @@ function ReportView({
 
         {result.warnings.length > 0 && (
           <div>
-            <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] text-ink-400">
+            <p className="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">
               Warnings
             </p>
             <div className="mt-2 space-y-2">
@@ -573,7 +573,7 @@ function ReportView({
         )}
 
         <div>
-          <p className="text-[9.5px] font-bold uppercase tracking-[0.14em] text-ink-400">
+          <p className="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-ink-400">
             Extracted blocks
           </p>
           <div className="mt-2 space-y-2">
@@ -584,7 +584,7 @@ function ReportView({
                   key={block.id}
                   className={cn(
                     "rounded-xl border p-3",
-                    uncertain ? "border-rose-200 bg-rose-50/50" : "border-slate-200/80 bg-white",
+                    uncertain ? "border-rose-200 bg-rose-50/50" : "border-hairline bg-white",
                   )}
                 >
                   <div className="flex flex-wrap items-center gap-2">
@@ -629,9 +629,9 @@ function ReportView({
         )}
 
         {entry.kind === "stored" ? (
-          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+          <div className="rounded-xl border border-hairline bg-parchment/60 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.13em] text-ink-500">
+              <p className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.13em] text-ink-500">
                 <PencilLine className="h-3 w-3" /> Human review
               </p>
               {entry.humanCorrection && !editing && (
@@ -645,7 +645,7 @@ function ReportView({
               <div className="mt-2 flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
                 <div>
-                  <p className="text-[9.5px] font-bold uppercase tracking-wider text-emerald-700">
+                  <p className="text-[9.5px] font-semibold uppercase tracking-wider text-emerald-700">
                     Human-corrected record
                   </p>
                   <p className="mt-1 text-[11.5px] leading-5 text-ink-600">
@@ -699,7 +699,7 @@ function ReportView({
         )}
       </div>
 
-      <div className="flex items-start gap-2 border-t border-slate-100 bg-slate-50/60 px-5 py-3">
+      <div className="flex items-start gap-2 border-t border-[#f0f0f0] bg-parchment/60 px-5 py-3">
         <ScanLine className="mt-0.5 h-3.5 w-3.5 shrink-0 text-ink-300" />
         <p className="text-[9.5px] leading-4 text-ink-400">
           Overall confidence {percent(result.overallConfidence)} is the model&apos;s own{" "}

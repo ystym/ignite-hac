@@ -6,6 +6,7 @@ import {
   FileText,
   FlaskConical,
   Gauge,
+  GraduationCap,
   KeyRound,
   Lock,
   ShieldAlert,
@@ -32,7 +33,7 @@ const ENV_SNIPPET = `DATABASE_URL="file:../data/studymate.db"
 GEMINI_API_KEY="paste-your-key-here"
 
 # Optional overrides — these are the defaults
-GEMINI_MODEL="gemini-3.6-flash"
+GEMINI_MODEL="gemini-3-flash-preview"
 GEMINI_EMBEDDING_MODEL="gemini-embedding-001"
 GEMINI_EMBEDDING_DIMENSIONS="768"
 GEMINI_THINKING_LEVEL="low"
@@ -64,7 +65,7 @@ const CONFIG_ROWS = [
   {
     variable: "GEMINI_MODEL",
     required: "No",
-    fallback: "gemini-3.6-flash",
+    fallback: "gemini-3-flash-preview",
     purpose: "Vision OCR, audio transcription, notes, quizzes, plans and answers.",
   },
   {
@@ -107,10 +108,22 @@ const CAPABILITIES = [
     blocked: false,
   },
   {
+    capability: "Diagram labels and relationship summaries",
+    live: "Diagram blocks capture captions, labels, axes, legends and visible links",
+    demo: "Curated examples only",
+    blocked: false,
+  },
+  {
     capability: "Notes in Simple English or Hinglish",
     live: "Generated, schema-validated and grounded in the extraction",
     demo: "Curated samples, read-only",
     blocked: false,
+  },
+  {
+    capability: "Learn a topic outside the uploaded material",
+    live: "Separate general-knowledge notes, labelled and never indexed",
+    demo: "Disabled — no fabricated topic notes",
+    blocked: true,
   },
   {
     capability: "Grounded MCQ quizzes",
@@ -159,6 +172,11 @@ const LIMITS = [
     icon: ShieldAlert,
     title: "Grounding is a guardrail, not a guarantee",
     body: "Quiz generation checks that a quoted source excerpt really exists, and live Q&A rejects answers without a citation. That proves the quote exists — not that the explanation, formula or pedagogical judgment is correct.",
+  },
+  {
+    icon: GraduationCap,
+    title: "Topic notes are external knowledge",
+    body: "Learn a topic does not read your uploads. Its notes are general knowledge, kept out of the database index, the grounded notes, quizzes and cited answers, and labelled as external everywhere they appear. Verify them against your own syllabus.",
   },
   {
     icon: Timer,
@@ -232,10 +250,10 @@ export default async function SetupPage() {
 
       <section id="live-setup" className="mt-9 scroll-mt-24">
         <div className="mb-4">
-          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-600">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-600">
             Live setup
           </p>
-          <h2 className="mt-1 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-extrabold tracking-[-0.03em] text-ink-950">
+          <h2 className="mt-1 font-display text-[clamp(1.35rem,2.2vw,1.75rem)] font-semibold tracking-[-0.03em] text-ink-950">
             Switch from curated demo to live AI
           </h2>
           <p className="mt-1.5 max-w-3xl text-[12.5px] leading-6 text-ink-500">
@@ -244,13 +262,13 @@ export default async function SetupPage() {
           </p>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-[1.06fr_0.94fr]">
-          <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card sm:p-6">
+        <div className="grid min-w-0 gap-5 xl:grid-cols-[1.06fr_0.94fr]">
+          <div className="min-w-0 rounded-2xl border border-hairline bg-white p-5 sm:p-6">
             <div className="flex items-center gap-2">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-50 text-violet-600">
                 <Sparkles className="h-4 w-4" />
               </span>
-              <h3 className="font-display text-[15px] font-bold text-ink-900">From zero to running</h3>
+              <h3 className="font-display text-[15px] font-semibold text-ink-900">From zero to running</h3>
               <Badge variant="default" className="ml-auto">
                 Node 20+
               </Badge>
@@ -276,11 +294,11 @@ export default async function SetupPage() {
                 },
               ].map((step, index) => (
                 <li key={step.title} className="flex items-start gap-3">
-                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink-900 font-mono text-[10px] font-bold text-white">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink-900 font-mono text-[10px] font-semibold text-white">
                     {index + 1}
                   </span>
                   <div>
-                    <p className="text-[12px] font-bold text-ink-800">{step.title}</p>
+                    <p className="text-[12px] font-semibold text-ink-800">{step.title}</p>
                     <p className="mt-0.5 text-[11px] leading-5 text-ink-500">{step.body}</p>
                   </div>
                 </li>
@@ -289,7 +307,7 @@ export default async function SetupPage() {
 
             <div className="mt-4 overflow-hidden rounded-xl border border-ink-800 bg-ink-950">
               <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2">
-                <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-white/40">
+                <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/40">
                   Terminal
                 </span>
                 <span className="font-mono text-[9px] text-white/30">bash / PowerShell</span>
@@ -301,25 +319,25 @@ export default async function SetupPage() {
 
             <p className="mt-3 flex items-start gap-1.5 text-[10px] leading-4 text-ink-400">
               <TriangleAlert className="mt-0.5 h-3 w-3 shrink-0 text-amber-500" />
-              Restart the dev server after editing .env. Use <code className="rounded bg-slate-100 px-1">npm run db:push</code>{" "}
-              for a fresh database without the seed, or <code className="rounded bg-slate-100 px-1">npm run db:seed</code>{" "}
+              Restart the dev server after editing .env. Use <code className="rounded bg-[#e8e8ed] px-1">npm run db:push</code>{" "}
+              for a fresh database without the seed, or <code className="rounded bg-[#e8e8ed] px-1">npm run db:seed</code>{" "}
               to reload only the demo.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 px-5 py-3.5">
+          <div className="min-w-0 space-y-4">
+            <div className="min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#f0f0f0] px-5 py-3.5">
                 <div className="flex items-center gap-2">
                   <KeyRound className="h-4 w-4 text-violet-600" />
-                  <h3 className="text-[12.5px] font-bold text-ink-900">Minimum live configuration</h3>
+                  <h3 className="text-[12.5px] font-semibold text-ink-900">Minimum live configuration</h3>
                 </div>
                 <CopyButton value={ENV_SNIPPET} label="Copy .env" />
               </div>
-              <pre className="overflow-x-auto bg-[#FBFBFE] p-4 font-mono text-[10.5px] leading-5 text-ink-600">
+              <pre className="overflow-x-auto bg-parchment p-4 font-mono text-[10.5px] leading-5 text-ink-600">
                 <code>{ENV_SNIPPET}</code>
               </pre>
-              <p className="border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 text-[10px] leading-4 text-ink-400">
+              <p className="border-t border-[#f0f0f0] bg-parchment/60 px-4 py-2.5 text-[10px] leading-4 text-ink-400">
                 Never commit <code className="rounded bg-white px-1">.env</code>. The key is not
                 prefixed with <code className="rounded bg-white px-1">NEXT_PUBLIC_</code>, so it stays
                 out of client bundles.
@@ -329,7 +347,7 @@ export default async function SetupPage() {
             <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50/50 p-5">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                <h3 className="text-[12.5px] font-bold text-emerald-900">What to verify, honestly</h3>
+                <h3 className="text-[12.5px] font-semibold text-emerald-900">What to verify, honestly</h3>
               </div>
               <ul className="mt-2.5 space-y-2">
                 {[
@@ -353,7 +371,7 @@ export default async function SetupPage() {
       <section className="mt-9">
         <div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
           <div>
-            <h2 className="font-display text-xl font-bold text-ink-900">What changes with a key</h2>
+            <h2 className="font-display text-xl font-semibold text-ink-900">What changes with a key</h2>
             <p className="mt-0.5 text-[11.5px] text-ink-400">
               Same interface, same database. The table states exactly which behaviour is live and which
               is curated.
@@ -366,17 +384,17 @@ export default async function SetupPage() {
           </Button>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/70 text-[9.5px] font-bold uppercase tracking-[0.13em] text-ink-400">
-                  <th className="px-5 py-3 font-bold">Capability</th>
-                  <th className="px-5 py-3 font-bold">With GEMINI_API_KEY</th>
-                  <th className="px-5 py-3 font-bold">Without a key (Demo Mode)</th>
+                <tr className="border-b border-[#f0f0f0] bg-parchment text-[9.5px] font-semibold uppercase tracking-[0.13em] text-ink-400">
+                  <th className="px-5 py-3 font-semibold">Capability</th>
+                  <th className="px-5 py-3 font-semibold">With GEMINI_API_KEY</th>
+                  <th className="px-5 py-3 font-semibold">Without a key (Demo Mode)</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-[#f0f0f0]">
                 {CAPABILITIES.map((row) => (
                   <tr key={row.capability} className="align-top">
                     <td className="px-5 py-3 text-[11.5px] font-semibold text-ink-800">
@@ -403,7 +421,7 @@ export default async function SetupPage() {
               </tbody>
             </table>
           </div>
-          <p className="border-t border-slate-100 bg-slate-50/60 px-5 py-3 text-[10px] leading-4 text-ink-400">
+          <p className="border-t border-[#f0f0f0] bg-parchment/60 px-5 py-3 text-[10px] leading-4 text-ink-400">
             Demo documents are read-only for AI note and quiz generation, but manual correction and local
             index rebuilding stay enabled so the reliability workflow remains inspectable.
           </p>
@@ -412,27 +430,27 @@ export default async function SetupPage() {
 
       <section className="mt-9">
         <div className="mb-3">
-          <h2 className="font-display text-xl font-bold text-ink-900">Environment reference</h2>
+          <h2 className="font-display text-xl font-semibold text-ink-900">Environment reference</h2>
           <p className="mt-0.5 text-[11.5px] text-ink-400">
             Values are read by the server at request time. Secrets are never rendered on this page.
           </p>
         </div>
-        <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-hairline bg-white">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[720px] text-left">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/70 text-[9.5px] font-bold uppercase tracking-[0.13em] text-ink-400">
-                  <th className="px-5 py-3 font-bold">Variable</th>
-                  <th className="px-5 py-3 font-bold">Required</th>
-                  <th className="px-5 py-3 font-bold">Default</th>
-                  <th className="px-5 py-3 font-bold">Purpose</th>
+                <tr className="border-b border-[#f0f0f0] bg-parchment text-[9.5px] font-semibold uppercase tracking-[0.13em] text-ink-400">
+                  <th className="px-5 py-3 font-semibold">Variable</th>
+                  <th className="px-5 py-3 font-semibold">Required</th>
+                  <th className="px-5 py-3 font-semibold">Default</th>
+                  <th className="px-5 py-3 font-semibold">Purpose</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-[#f0f0f0]">
                 {CONFIG_ROWS.map((row) => (
                   <tr key={row.variable}>
                     <td className="px-5 py-3">
-                      <code className="rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[10.5px] font-semibold text-ink-800">
+                      <code className="rounded-md bg-[#e8e8ed] px-1.5 py-0.5 font-mono text-[10.5px] font-semibold text-ink-800">
                         {row.variable}
                       </code>
                     </td>
@@ -449,7 +467,7 @@ export default async function SetupPage() {
 
       <section className="mt-9">
         <div className="mb-3">
-          <h2 className="font-display text-xl font-bold text-ink-900">Limits and honest boundaries</h2>
+          <h2 className="font-display text-xl font-semibold text-ink-900">Limits and honest boundaries</h2>
           <p className="mt-0.5 text-[11.5px] text-ink-400">
             These are part of the design, not footnotes. They are stated here so a demo cannot imply more
             than it does.
@@ -460,19 +478,19 @@ export default async function SetupPage() {
           {LIMITS.map((limit) => (
             <article
               key={limit.title}
-              className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-card"
+              className="rounded-2xl border border-hairline bg-white p-5"
             >
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-ink-600">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e8e8ed] text-ink-600">
                 <limit.icon className="h-4 w-4" />
               </span>
-              <h3 className="mt-3 text-[12.5px] font-bold text-ink-900">{limit.title}</h3>
+              <h3 className="mt-3 text-[12.5px] font-semibold text-ink-900">{limit.title}</h3>
               <p className="mt-1.5 text-[11px] leading-5 text-ink-500">{limit.body}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <div className="mt-8 flex flex-col items-start justify-between gap-3 rounded-2xl border border-slate-200/80 bg-[linear-gradient(135deg,#F8F5FF,#FFFFFF_55%,#F7FBF9)] p-5 sm:flex-row sm:items-center">
+      <div className="mt-8 flex flex-col items-start justify-between gap-3 rounded-2xl border border-hairline bg-parchment p-5 sm:flex-row sm:items-center">
         <div className="flex items-start gap-2.5">
           <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-violet-500" />
           <p className="max-w-2xl text-[10.5px] leading-5 text-ink-500">

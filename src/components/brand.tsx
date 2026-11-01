@@ -10,6 +10,9 @@ export function BrandMark({
   size?: number;
   tone?: "dark" | "light";
 }) {
+  // Flat mark only — one surface, one blue accent. No gradients.
+  const tile = tone === "dark" ? "#1d1d1f" : "#ffffff";
+  const glyph = tone === "dark" ? "#ffffff" : "#1d1d1f";
   return (
     <span
       className={cn("relative inline-flex shrink-0 items-center justify-center", className)}
@@ -17,19 +20,12 @@ export function BrandMark({
       aria-hidden="true"
     >
       <svg viewBox="0 0 48 48" width={size} height={size} fill="none">
-        <defs>
-          <linearGradient id="brand-bg" x1="0" y1="0" x2="48" y2="48">
-            <stop stopColor={tone === "dark" ? "#171D45" : "#FFFFFF"} />
-            <stop offset="1" stopColor={tone === "dark" ? "#0F1433" : "#EDEAFF"} />
-          </linearGradient>
-        </defs>
-        <rect width="48" height="48" rx="13" fill="url(#brand-bg)" />
+        <rect width="48" height="48" rx="11" fill={tile} />
         <path
           d="M12 33V15h5.8l6.2 10.1L30.2 15H36v18h-5.1V24.1L25 33h-1.9l-6-8.9V33H12Z"
-          fill={tone === "dark" ? "#FFFFFF" : "#0F1433"}
+          fill={glyph}
         />
-        <circle cx="38" cy="10" r="6" fill="#7C53FF" />
-        <circle cx="38" cy="10" r="2.2" fill="#D5C9FF" />
+        <circle cx="38.5" cy="9.5" r="4.5" fill="#0066cc" />
       </svg>
     </span>
   );
@@ -52,22 +48,21 @@ export function BrandLockup({
       className={cn("group inline-flex items-center gap-2.5", className)}
       aria-label="STUDYMATE AI home"
     >
-      <BrandMark tone={inverse ? "light" : "dark"} size={compact ? 32 : 38} />
+      <BrandMark tone={inverse ? "light" : "dark"} size={compact ? 30 : 34} />
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-display text-[15px] font-extrabold tracking-[-0.03em]",
+            "font-display text-[15px] font-semibold tracking-[-0.025em]",
             inverse ? "text-white" : "text-ink-900",
           )}
         >
-          STUDYMATE{" "}
-          <span className={inverse ? "text-violet-300" : "text-violet-600"}>AI</span>
+          STUDYMATE <span className={inverse ? "text-action-dark" : "text-action"}>AI</span>
         </span>
         {!compact && (
           <span
             className={cn(
-              "mt-1 text-[9px] font-semibold uppercase tracking-[0.19em]",
-              inverse ? "text-white/45" : "text-ink-400",
+              "mt-1 text-[9px] font-medium uppercase tracking-[0.16em]",
+              inverse ? "text-white/50" : "text-ink-400",
             )}
           >
             Study intelligence

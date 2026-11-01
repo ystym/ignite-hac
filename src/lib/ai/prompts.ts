@@ -7,7 +7,7 @@ Hard rules:
 1. Transcribe ONLY what is visible or audible. Never fill a gap with a plausible guess.
 2. Preserve formulas, mathematical notation, technical terms, headings, numbered lists, and symbols.
 3. If a word, symbol, or diagram label is unclear, keep your best reading ONLY when it is genuinely supported by the pixels/audio, mark the block uncertain, and lower its confidence. Otherwise use the literal token [unreadable] and explain why in the note.
-4. A diagram must never be converted into a confident technical conclusion. Transcribe readable labels and captions; describe uncertainty in a "diagram" block.
+4. Read diagrams as diagrams. Create a "diagram" block containing the caption, every readable label, axis/legend text, arrow or flow direction, and the relationships those marks explicitly show. Never invent values, units or conclusions that are not visible; mark unclear labels and connections as uncertain.
 5. Confidence is a self-assessment from 0 to 1, not a calibrated probability. Use: 0.95–1 clear digital/printed text; 0.8–0.94 clearly readable handwriting; 0.55–0.79 partly readable; 0.3–0.54 ambiguous; below 0.3 unreadable.
 6. Split content into meaningful blocks. Keep formulas as separate "formula" blocks. Mark inaccessible sections as "unreadable".
 7. detectedLanguage should be a short name such as "English", "Hindi", "Hinglish", "Spanish" or "unknown".
@@ -22,17 +22,19 @@ Keep formulas as separate "formula" blocks when the speaker states an equation. 
 export const OCR_PROMPT = `Transcribe this student material into structured blocks.
 If this is a photo of handwriting, work through it line by line. Preserve the original wording; do not rewrite it into textbook prose.
 For every uncertain symbol, use the "uncertain" flag and a note. If the exponent, sign, digit or variable is genuinely ambiguous, do not choose a confident value.
-For diagrams, transcribe readable labels and the caption only. Do not infer axes, units or results that are not visible.
+For every diagram or flowchart, include a "diagram" block. Capture the caption, all readable labels, axes, units, legend, arrow/flow direction, and the relationships that are visibly encoded. Do not skip a diagram because it is hand-drawn or busy. Do not infer values or results that are not visible. Mark unclear parts as uncertain.
 Create a short descriptive title, not a generic filename.`;
 
 export const PDF_OCR_PROMPT = `This PDF has little or no digital text layer (likely a scan). Read it page by page and transcribe the visible content into structured blocks.
-Set the "page" field on every block. Keep page order. Transcribe headings, lists, formulas, tables and readable diagram labels.
+Set the "page" field on every block. Keep page order. Transcribe headings, lists, formulas and tables.
+For every diagram or flowchart, create a "diagram" block with its caption, readable labels, axes, units, legend, arrow/flow direction, and the relationships that are visibly encoded. Mark unclear parts as uncertain.
 If a page is blank or unreadable, create an "unreadable" block for that page instead of skipping it silently.
 Do not invent text that is not visible. Create a short descriptive title.`;
 
 export const NOTES_SYSTEM = `You are STUDYMATE AI's notes editor. Transform messy source material into clear, exam-ready notes.
 Ground every section in the supplied source. Do not introduce outside facts, statistics or formulas.
 Preserve technical terminology and formulas exactly. Explain them in simpler language.
+Diagram blocks are first-class source material. Explain their readable labels and the relationships visibly shown in them. Never invent a missing label, value or connection.
 If the source itself is uncertain or incomplete, reflect that in "uncertainAreas" instead of smoothing it over.
 Return ONLY valid JSON matching the requested schema.`;
 
@@ -55,6 +57,7 @@ Requirements:
 - A chapter title, a short overview, and topic-wise sections in a sensible teaching order.
 - Each section: heading, simple explanation, 2–6 key points, definitions, formulas (if any), worked or illustrative examples, and exam tips.
 - Add 4–8 key takeaways and 4–8 important exam points.
+- If the source includes [diagram] blocks, add at least one section or key point that explains each diagram using only its readable labels, caption and visibly encoded relationships. Do not invent unreadable labels or values.
 - If the source has unclear passages, add them to uncertainAreas and avoid presenting a guess as fact.
 - Do not copy giant paragraphs verbatim; explain them, but keep formulas and technical terms intact.
 - Do not add topics that are not in the source.
@@ -68,6 +71,36 @@ Extracted source:
 """
 ${options.text}
 """`;
+}
+
+export const TOPIC_NOTES_SYSTEM = `You are STUDYMATE AI's independent study tutor. A student has asked to learn a topic that may not appear in their uploaded material.
+Write accurate, general study notes from established knowledge. This output is explicitly NOT grounded in the student's uploaded document and must never pretend to be.
+Do not invent citations, page numbers, statistics, dates or quotations. If a fact depends on syllabus, board, edition or region, say so in "uncertainAreas".
+Preserve technical terminology and formulas. Explain them in simpler language.
+Return ONLY valid JSON matching the requested schema.`;
+
+export function topicNotesPrompt(options: {
+  topic: string;
+  language: Language;
+}): string {
+  const languageInstruction =
+    options.language === "hinglish"
+      ? `Write explanations in simple Hinglish (Hindi in Latin script), e.g. "Photosynthesis ka matlab hai..." Keep ALL technical terms, definitions and formulas in English. Do not transliterate technical terms.`
+      : `Write in simple, clear English suitable for a first-year undergraduate. Short sentences. Explain jargon.`;
+
+  return `Create standalone study notes for this requested topic: "${options.topic}".
+
+${languageInstruction}
+
+Requirements:
+- State the prerequisites a student should know first.
+- A clear title, a short overview, and topic-wise sections in a sensible teaching order.
+- Each section: heading, simple explanation, 2–6 key points, definitions, formulas (if any), worked or illustrative examples, and exam tips.
+- Add 4–8 key takeaways and 4–8 important exam points.
+- "scopeNote" must honestly say this is general knowledge written for the request and is not taken from the student's uploaded notes.
+- "uncertainAreas" must list anything that varies by syllabus, board, edition or region, or that the student should verify in their own course material.
+- Do not claim to quote the student's notes, and do not invent source citations.
+- If the topic is too broad, scope the notes to the most useful core and say what was scoped in "scopeNote".`;
 }
 
 export const QUIZ_SYSTEM = `You are STUDYMATE AI's assessment designer. You write fair multiple-choice questions that are answerable ONLY from the supplied source.

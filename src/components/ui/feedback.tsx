@@ -20,11 +20,11 @@ export function Progress({
       aria-valuemax={100}
       aria-valuenow={Math.round(clamped)}
       aria-label={label}
-      className={cn("h-2 w-full overflow-hidden rounded-full bg-slate-100", className)}
+      className={cn("h-1.5 w-full overflow-hidden rounded-full bg-[#e8e8ed]", className)}
     >
       <div
         className={cn(
-          "h-full rounded-full bg-violet-600 transition-[width] duration-500 ease-out",
+          "h-full rounded-full bg-action transition-[width] duration-500 ease-out",
           indicatorClassName,
         )}
         style={{ width: `${clamped}%` }}
@@ -45,7 +45,7 @@ export function Separator({
       role="separator"
       aria-orientation={orientation}
       className={cn(
-        "shrink-0 bg-slate-200",
+        "shrink-0 bg-hairline",
         orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
         className,
       )}
@@ -61,7 +61,7 @@ export function Spinner({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "inline-block h-4 w-4 animate-spin rounded-full border-2 border-violet-200 border-t-violet-600",
+        "inline-block h-4 w-4 animate-spin rounded-full border-2 border-[#d2d2d7] border-t-action",
         className,
       )}
       aria-hidden="true"

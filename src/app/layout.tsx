@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import { SpiderWebBackground } from "@/components/spider-web-background";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f7f7fb",
+  themeColor: "#f5f5f7",
   colorScheme: "light",
 };
 
@@ -84,7 +85,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body>
-        {children}
+        <SpiderWebBackground />
+        <div className="relative z-10">{children}</div>
         <Toaster
           theme="light"
           position="top-center"
@@ -92,10 +94,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           closeButton
           toastOptions={{
             style: {
-              borderRadius: "16px",
+              borderRadius: "18px",
               fontFamily: "var(--font-inter)",
-              border: "1px solid rgba(15,20,51,0.08)",
-              boxShadow: "0 24px 48px -20px rgba(15,20,51,0.25)",
+              border: "1px solid #e0e0e0",
+              background: "#ffffff",
+              color: "#1d1d1f",
+              boxShadow: "none",
             },
           }}
         />

@@ -1,4 +1,9 @@
-import { GoogleGenAI, type GenerateContentResponse, type Part } from "@google/genai";
+import {
+  GoogleGenAI,
+  type GenerateContentResponse,
+  type Part,
+  type ThinkingConfig,
+} from "@google/genai";
 import { z } from "zod";
 import { AIError, toAppError } from "@/lib/errors";
 import { getAIStatus } from "@/lib/env";
@@ -51,11 +56,17 @@ function sleep(ms: number) {
  * maxOutputTokens budget can be consumed by hidden reasoning and return no
  * visible text at all. Older models keep their provider defaults.
  */
-function thinkingConfigFor(model: string) {
+function thinkingConfigFor(model: string): ThinkingConfig | undefined {
   const configured = (process.env.GEMINI_THINKING_LEVEL ?? "low").trim().toLowerCase();
   if (!configured || configured === "off" || configured === "default") return undefined;
   if (!/^gemini-(3|4)(\.|-)|^gemini-omni/.test(model)) return undefined;
-  return { thinkingLevel: configured };
+  const level =
+    (["minimal", "low", "medium", "high"] as const).includes(
+      configured as "minimal" | "low" | "medium" | "high",
+    )
+      ? (configured as NonNullable<ThinkingConfig["thinkingLevel"]>)
+      : ("low" as NonNullable<ThinkingConfig["thinkingLevel"]>);
+  return { thinkingLevel: level };
 }
 
 function extractJson(text: string): unknown {
@@ -362,5 +373,124 @@ export async function testGeminiConnection(): Promise<ConnectionTestResult> {
       text: "",
       message: appError.message,
     };
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Web search                                                                  */
+/* -------------------------------------------------------------------------- */
+
+export type WebSource = {
+  title: string;
+  url: string;
+  domain: string | null;
+};
+
+export type WebResearchResult = {
+  query: string;
+  answer: string;
+  model: string;
+  sources: WebSource[];
+  searchQueries: string[];
+  grounded: boolean;
+  latencyMs: number;
+};
+
+const WEB_RESEARCH_SYSTEM = `You are STUDYMATE AI's web research tutor. Use Google Search to research the student's topic.
+Write a clear, student-friendly answer in plain text with these exact sections:
+1. A direct answer in 2–4 short sentences.
+2. A line containing exactly "Key ideas" followed by 4–7 bullet lines starting with "- ".
+3. A line containing exactly "How to study this" followed by 3–5 bullet lines starting with "- ".
+4. A line containing exactly "Check before relying on this" followed by 1–3 bullet lines, only when something is contested, syllabus-dependent or time-sensitive.
+
+Rules:
+- Only state what the search results support. If sources disagree, say so explicitly.
+- Never invent a link, book, statistic, date or quotation. Do not add a bibliography; the app lists the real source URLs from search metadata.
+- Do not claim the answer came from the student's uploaded notes.
+- Keep the whole answer under 450 words. Plain text only; no Markdown tables, no code fences, no raw URLs.`;
+
+export async function generateWebResearch(rawQuery: string): Promise<WebResearchResult> {
+  const query = rawQuery.replace(/\s+/g, " ").trim().slice(0, 180);
+  const ai = genAI();
+  const model = getConfiguredModel();
+  const started = Date.now();
+  const thinking = thinkingConfigFor(model);
+
+  try {
+    const response = await ai.models.generateContent({
+      model,
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text: `${WEB_RESEARCH_SYSTEM}\n\nStudent topic: ${query}\n\nSearch the web, then write the answer.`,
+            },
+          ],
+        },
+      ],
+      config: {
+        temperature: 0.2,
+        maxOutputTokens: 4096,
+        tools: [{ googleSearch: {} }],
+        ...(thinking ? { thinkingConfig: thinking } : {}),
+      },
+    });
+
+    const answer = readResponseText(response).trim();
+    if (!answer) {
+      throw new AIError({
+        message:
+          "The web search returned no visible answer. Nothing was saved. Retry, or use Learn a topic for general-knowledge notes.",
+        code: "AI_EMPTY_WEB_ANSWER",
+        status: 502,
+        retryable: true,
+      });
+    }
+
+    const metadata = response.candidates?.[0]?.groundingMetadata;
+    const seen = new Set<string>();
+    const sources: WebSource[] = [];
+    for (const chunk of metadata?.groundingChunks ?? []) {
+      const web = chunk.web;
+      if (!web?.uri) continue;
+      if (!/^https?:\/\//i.test(web.uri)) continue;
+      if (seen.has(web.uri)) continue;
+      seen.add(web.uri);
+      let domain: string | null = web.domain ?? null;
+      if (!domain) {
+        try {
+          domain = new URL(web.uri).hostname.replace(/^www\./, "");
+        } catch {
+          domain = null;
+        }
+      }
+      sources.push({
+        title: web.title?.trim() || domain || "Web source",
+        url: web.uri,
+        domain,
+      });
+      if (sources.length >= 12) break;
+    }
+
+    return {
+      query,
+      answer,
+      model,
+      sources,
+      searchQueries: metadata?.webSearchQueries ?? [],
+      grounded: sources.length > 0,
+      latencyMs: Date.now() - started,
+    };
+  } catch (error) {
+    if (error instanceof AIError) throw error;
+    const appError = toAppError(error);
+    throw new AIError({
+      message: appError.message,
+      code: appError.code,
+      status: appError.status,
+      retryable: appError.retryable,
+      cause: error,
+    });
   }
 }
