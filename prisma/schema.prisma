@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// A source uploaded by the student or loaded from the curated sample library.
+model Document {
+  id              String   @id @default(cuid())
+  title           String
+  fileName        String
+  mimeType        String
+  fileSize        Int
+  /// image | pdf | audio | text
+  fileType        String
+  /// UPLOAD | SAMPLE | TEXT | DEMO
+  source          String   @default("UPLOAD")
+  /// handwritten | syllabus | audio | null
+  sampleKey       String?
+  storagePath     String?
+  /// UPLOADED | PROCESSING | READY | FAILED
+  status          String   @default("UPLOADED")
+  processingStage String   @default("queued")
+  processingError String?
+  /// LIVE | DEMO — never present DEMO as a live model run.
+  mode            String   @default("LIVE")
+  extractedText   String?
+  blocksJson      String?
+  warningsJson    String?
+  overallConfidence Float?
+  pageCount       Int?
+  language        String?
+  /// vision_ocr | pdf_text | audio_transcription | typed
+  extractionMethod String?
+  extractionModel  String?
+  /// PENDING | INDEXING | READY | STALE | FAILED
+  indexStatus     String   @default("PENDING")
+  indexError      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  notes      Note?
+  quizzes    Quiz[]
+  chunks     Chunk[]
+  messages   ChatMessage[]
+
+  @@index([createdAt])
+  @@index([status])
+}
+
+model Note {
+  id          String   @id @default(cuid())
+  documentId  String   @unique
+  document    Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  title       String
+  language    String   @default("simple_en")
+  contentJson String
+  model       String?
+  mode        String   @default("LIVE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Quiz {
+  id            String   @id @default(cuid())
+  documentId    String
+  document      Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  title         String
+  difficulty    String   @default("mixed")
+  questionCount Int
+  questionsJson String
+  model         String?
+  mode          String   @default("LIVE")
+  createdAt     DateTime @default(now())
+
+  attempts QuizAttempt[]
+
+  @@index([documentId])
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  answersJson String
+  score       Int
+  total       Int
+  mode        String   @default("LIVE")
+  completedAt DateTime @default(now())
+
+  @@index([quizId])
+}
+
+model Chunk {
+  id           String   @id @default(cuid())
+  documentId   String
+  document     Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  chunkIndex   Int
+  content      String
+  page         Int?
+  startSeconds Float?
+  endSeconds   Float?
+  confidence   Float?
+  sourceLabel  String?
+  embeddingJson String
+  createdAt    DateTime @default(now())
+
+  @@index([documentId])
+}
+
+model ChatMessage {
+  id          String   @id @default(cuid())
+  documentId  String
+  document    Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  role        String
+  content     String
+  sourcesJson String?
+  confidence  Float?
+  mode        String   @default("LIVE")
+  createdAt   DateTime @default(now())
+
+  @@index([documentId, createdAt])
+}
+
+model StudyPlan {
+  id                  String   @id @default(cuid())
+  title               String
+  subject             String
+  examDate            DateTime
+  dailyMinutes        Int
+  language            String   @default("simple_en")
+  syllabus            String
+  topicsJson          String
+  daysJson            String
+  completedTopicsJson String
+  completedTaskIdsJson String
+  summary             String?
+  mode                String   @default("LIVE")
+  model               String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+/// One recorded run of the reliability lab against an ambiguous fixture.
+model ReliabilityRun {
+  id              String   @id @default(cuid())
+  imageKey        String
+  mode            String   @default("LIVE")
+  model           String?
+  resultJson      String
+  humanCorrection String?
+  createdAt       DateTime @default(now())
+}
